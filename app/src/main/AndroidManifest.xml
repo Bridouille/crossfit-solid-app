@@ -25,6 +25,7 @@
 
         <activity
             android:name=".features.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
     </application>
 

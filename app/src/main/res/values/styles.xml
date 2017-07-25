@@ -30,10 +30,10 @@
 
     <!-- TextInputLayout themes -->
     <style name="TextInputLayoutLogin" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColorHint">@android:color/black</item>
-        <item name="colorControlNormal">@android:color/black</item> <!-- underline when not selected -->
-        <item name="colorControlActivated">@color/colorPrimary</item> <!-- hint + underline on select -->
-        <item name="colorControlHighlight">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item> <!-- underline when not selected -->
+        <item name="colorControlActivated">@android:color/white</item> <!-- hint + underline on select -->
+        <item name="colorControlHighlight">@android:color/white</item>
         <item name="android:textColorSecondary">@color/colorAccent</item> <!-- char counter color -->
     </style>
 

@@ -1,8 +1,10 @@
 package com.bridou_n.crossfitsolid.utils
 
 import android.os.Build
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.view.WindowManager
 import com.bridou_n.crossfitsolid.AppSingleton
 import com.bridou_n.crossfitsolid.R
@@ -26,3 +28,5 @@ fun AppCompatActivity.setStatusBarColor(color: Int) {
         window.statusBarColor = ContextCompat.getColor(this, color)
     }
 }
+
+fun AppCompatActivity.showSnackbar(view: View, str: String) = Snackbar.make(view, str, Snackbar.LENGTH_LONG).show()

@@ -5,6 +5,7 @@ import com.bridou_n.crossfitsolid.DI.modules.AppModule
 import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
 import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
 import com.bridou_n.crossfitsolid.features.MainActivity
+import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -22,5 +23,6 @@ import javax.inject.Singleton
 interface AppComponent {
     fun providesContext() : Context
 
+    fun inject(act: LoginActivity)
     fun inject(act: MainActivity)
 }
