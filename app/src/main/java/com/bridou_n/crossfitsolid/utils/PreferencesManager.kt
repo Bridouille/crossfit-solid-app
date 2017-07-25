@@ -30,5 +30,7 @@ class PreferencesManager(ctx: Context) {
 
     fun getPassword() : String? = prefs.getString(PASSWORD_KEY, null)
 
+    fun isLogged() : Boolean = getUsername() != null
+
     fun clear() = prefs.edit().clear().apply()
 }

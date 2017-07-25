@@ -60,7 +60,7 @@ import javax.inject.Singleton
 
     @Provides @Singleton
     fun provideAuthenticator(prefs: PreferencesManager, gson: Gson) : Authenticator {
-        fun reAuthIfNeeded(route : Route, response: Response) : Request? {
+        fun reAuthIfNeeded(response: Response) : Request? {
             Log.d("Authenticator", "Authenticating for response: " + response)
             Log.d("Authenticator", "Challenges: " + response.challenges())
             Log.d("Authenticator", "Trying with ${prefs.getUsername()} - ${prefs.getPassword()}")
@@ -76,7 +76,7 @@ import javax.inject.Singleton
                     .build()
         }
 
-        return Authenticator { route, response -> reAuthIfNeeded(route, response) }
+        return Authenticator { _, response -> reAuthIfNeeded(response) }
     }
 
 
