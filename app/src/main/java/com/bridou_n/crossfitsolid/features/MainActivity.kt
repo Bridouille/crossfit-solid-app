@@ -2,7 +2,10 @@ package com.bridou_n.crossfitsolid.features
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
@@ -12,25 +15,36 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var bookingService: BookingService
+    @BindView(R.id.bottom_navigation) lateinit var bottomNav: BottomNavigationView
 
-    @Inject
-    lateinit var prefs: PreferencesManager
+    @Inject lateinit var bookingService: BookingService
+    @Inject lateinit var prefs: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppThemeNoActionBar)
         setContentView(R.layout.activity_main)
+        ButterKnife.bind(this)
         component().inject(this)
 
-        prefs.clear()
-
-        if (!prefs.isLogged()) {
+        if (!prefs.isLogged()) { // TODO: make sure the Authenticator works on 401 after token expires..
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
 
-        // TODO: implement this
+        bottomNav.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.action_classes -> {
+
+                }
+                R.id.action_wod -> {
+
+                }
+                R.id.action_account -> {
+
+                }
+            }
+            true
+        }
     }
 }

@@ -7,7 +7,6 @@ import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by bridou_n on 25/07/2017.
@@ -37,7 +36,6 @@ class LoginPresenter(val view: LoginContract.View,
 
         disposable?.dispose() // Cancel previous requests if any..
         disposable = api.login(LoginRequest(username, password))
-                .delay(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ resp ->
