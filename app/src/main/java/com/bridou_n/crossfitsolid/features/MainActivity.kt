@@ -7,7 +7,7 @@ import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
-import com.bridou_n.crossfitsolid.utils.component
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

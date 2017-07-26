@@ -7,7 +7,8 @@ package com.bridou_n.crossfitsolid.features.login
 interface LoginContract {
     interface View {
         fun navigateToMain()
-        fun showError(err: String)
+        fun showLoading(show: Boolean)
+        fun showError(err: Int)
     }
 
     interface Presenter {

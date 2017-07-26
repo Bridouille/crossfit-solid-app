@@ -2,8 +2,8 @@ package com.bridou_n.crossfitsolid.features.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.EditText
 import android.widget.ScrollView
 import butterknife.BindView
@@ -13,8 +13,11 @@ import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.MainActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
-import com.bridou_n.crossfitsolid.utils.component
-import com.bridou_n.crossfitsolid.utils.showSnackbar
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.hideKeyboard
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.hideView
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.showSnackbar
+import com.wang.avi.AVLoadingIndicatorView
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
@@ -22,6 +25,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     @BindView(R.id.container) lateinit var container: ScrollView
     @BindView(R.id.et_email) lateinit var email: EditText
     @BindView(R.id.et_password) lateinit  var password: EditText
+    @BindView(R.id.fab_login) lateinit var fabLogin: FloatingActionButton
+    @BindView(R.id.loading_indicator) lateinit var loading: AVLoadingIndicatorView
 
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
@@ -53,8 +58,19 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         finish()
     }
 
-    override fun showError(err: String) {
-        showSnackbar(container, err)
+    override fun showLoading(show: Boolean) {
+        if (show) {
+            hideKeyboard()
+            fabLogin.hideView(true)
+            loading.show()
+        } else {
+            fabLogin.show()
+            loading.hideView(true)
+        }
+    }
+
+    override fun showError(err: Int) {
+        showSnackbar(container, getString(err))
     }
 
     override fun onPause() {

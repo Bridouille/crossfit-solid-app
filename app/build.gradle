@@ -63,4 +63,7 @@ dependencies {
     // Butterknife
     compile 'com.jakewharton:butterknife:8.7.0'
     kapt 'com.jakewharton:butterknife-compiler:8.7.0'
+
+    // LoadingIndicatorView
+    compile 'com.wang.avi:library:2.1.3'
 }
