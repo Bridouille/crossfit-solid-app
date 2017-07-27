@@ -12,8 +12,10 @@ import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -30,17 +32,34 @@ class MainActivity : AppCompatActivity() {
         ButterKnife.bind(this)
         component().inject(this)
 
-        if (!prefs.isLogged()) { // TODO: make sure the Authenticator works on 401 after token expires..
+        if (!prefs.isLogged()) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
 
-        bookingService.getProfile("1480")
+        /*bookingService.getProfile("1480")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ profile ->
                     Log.d("MainActivity", "$profile")
                     Log.d("MainActivity", "${profile.billingAddress}" + profile.billingAddress?.city)
+                }, { err ->
+                    err.printStackTrace()
+                })*/
+
+        val start = Date()
+        val end = Date(start.time + 84600000)
+
+
+        bookingService.getGroupActivites(startDate = start.toIso8601Format(), endDate = end.toIso8601Format())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ resp ->
+
+                    for (ga in resp) {
+                        Log.d("MainAct", "${ga.id} -- ${ga.name}")
+                    }
+
                 }, { err ->
                     err.printStackTrace()
                 })

@@ -5,6 +5,7 @@ import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.models.LoginRequest
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -103,7 +104,7 @@ import javax.inject.Singleton
     }
 
     @Provides @Singleton
-    fun provideGson() = GsonBuilder().create()
+    fun provideGson() = GsonBuilder().setDateFormat(getIso8601Format()).create()
 
     @Provides @Singleton @Named("login")
     fun provideLoginRetrofit(@Named("login") httpClient: OkHttpClient, gson: Gson) : Retrofit {
