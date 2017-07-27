@@ -1,6 +1,7 @@
 package com.bridou_n.crossfitsolid.API
 
 import com.bridou_n.crossfitsolid.models.GroupActivity
+import com.bridou_n.crossfitsolid.models.GroupActivityBooking
 import com.bridou_n.crossfitsolid.models.Profile
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -15,9 +16,12 @@ interface BookingService {
     @GET("customers/{customerId}")
     fun getProfile(@Path("customerId") customerId: String) : Single<Profile>
 
-    @GET("businessunits/{businessUnitId}/groupactivities/")
+    @GET("businessunits/{businessUnitId}/groupactivities")
     fun getGroupActivites(@Path("businessUnitId") businessUnitId: Int = 1,
                           @Query("period.start") startDate: String,
-                          @Query("period.end") endDate: String,
+                          @Query("period.stop") endDate: String,
                           @Query("webCategory") webCategory: Int = 1) : Single<Array<GroupActivity>>
+
+    @GET("customers/{customerId}/bookings/groupactivities")
+    fun getMyGroupActivities(@Path("customerId") customerId: String) : Single<Array<GroupActivityBooking>>
 }

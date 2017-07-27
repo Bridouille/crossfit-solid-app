@@ -2,76 +2,58 @@ package com.bridou_n.crossfitsolid.features.classes
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
+import com.bridou_n.crossfitsolid.models.GroupActivity
+import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
-import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.util.*
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.showSnackbar
 import javax.inject.Inject
 
 /**
  * Created by bridou_n on 27/07/2017.
  */
 
-class ClassesFragment : Fragment() {
-    companion object {
-        val PARAM_USER_ID = "userId"
-
-        fun newInstance(userId: String): ClassesFragment {
-            val fragment = ClassesFragment()
-            val args = Bundle()
-            args.putString(PARAM_USER_ID, userId)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+class ClassesFragment : Fragment(), ClassesContract.View {
 
     @Inject lateinit var bookingService: BookingService
+    @Inject lateinit var prefs: PreferencesManager
 
-    lateinit var userId: String
+    lateinit var presenter: ClassesContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component().inject(this)
 
-        if (arguments != null) {
-            userId = arguments.getString(PARAM_USER_ID)
-        }
+        presenter = ClassesPresenter(this, bookingService, prefs)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_classes, container, false)
+        return inflater?.inflate(R.layout.fragment_classes, container, false)
     }
 
     override fun onResume() {
         super.onResume()
+        presenter.start()
+    }
 
-        val start = Date()
-        val end = Date(start.time + 84600000)
+    override fun displayClasses(bookings: Array<GroupActivity>) {
 
-        bookingService.getGroupActivites(startDate = start.toIso8601Format(), endDate = end.toIso8601Format())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ resp ->
+    }
 
-                    for (ga in resp) {
-                        Log.d("ClassesFragment", "${ga.id} -- ${ga.name}")
-                    }
+    override fun showLoading(show: Boolean) {
 
-                }, { err ->
-                    err.printStackTrace()
-                })
+    }
 
+    override fun showError(err: String?) {
+        // showSnackbar(view, err)
     }
 
     override fun onPause() {
         super.onPause()
+        presenter.stop()
     }
 }

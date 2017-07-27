@@ -18,4 +18,4 @@ data class GroupActivity(@SerializedName("id") val id: Int?,
                          @SerializedName("bookableLatest") val bookableLatest: Date?,
                          @SerializedName("externalMessage") val externalMessage: String?,
                          @SerializedName("cancelled") val cancelled: Boolean?,
-                         @SerializedName("slots") val slots: Slots)
+                         @SerializedName("slots") val slots: Slots?)

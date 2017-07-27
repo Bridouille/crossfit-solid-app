@@ -21,4 +21,4 @@ fun Date.fromIso8601Format(dateString: String) : Date {
     return sdf.parse(dateString)
 }
 
-fun getIso8601Format() : String = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+fun getIso8601Format() : String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

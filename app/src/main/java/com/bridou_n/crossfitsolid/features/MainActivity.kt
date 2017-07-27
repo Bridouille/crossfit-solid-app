@@ -41,13 +41,13 @@ class MainActivity : AppCompatActivity() {
 
             when (item.itemId) {
                 R.id.action_classes -> {
-                    frag = ClassesFragment.newInstance(prefs.getUserId() ?: "")
+                    frag = ClassesFragment()
                 }
                 R.id.action_wod -> {
-                    frag = WodsFragment.newInstance(prefs.getUserId() ?: "")
+                    frag = WodsFragment()
                 }
                 R.id.action_account -> {
-                    frag = AccountFragment.newInstance(prefs.getUserId() ?: "")
+                    frag = AccountFragment()
                 }
             }
 

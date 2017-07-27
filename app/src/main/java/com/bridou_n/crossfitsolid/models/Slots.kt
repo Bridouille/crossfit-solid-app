@@ -11,4 +11,5 @@ data class Slots(@SerializedName("total") val total: Int?,
                  @SerializedName("reservedForDropin") val reservedForDropin: Int?,
                  @SerializedName("leftToBook") val leftToBook: Int?,
                  @SerializedName("hasWaitingList") val hasWaitingList: Boolean?,
-                 @SerializedName("inWaitingList") val inWaitingList: Int?)
+                 @SerializedName("inWaitingList") val inWaitingList: Int?,
+                 var isBooked: Boolean?)
