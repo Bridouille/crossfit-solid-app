@@ -14,9 +14,9 @@ class PreferencesManager(ctx: Context) {
 
     // Various keys
     val ACCESS_TOKEN_KEY = "pref_access_token"
-    val REFRESH_TOKEN_KEY = "pref_refresh_token"
     var USERNAME_KEY = "pref_username"
     var PASSWORD_KEY = "pref_password"
+    val USER_ID_KEY = "pref_user_id"
 
     fun setUsername(username: String) {
         prefs.edit().putString(USERNAME_KEY, username).apply()
@@ -35,6 +35,12 @@ class PreferencesManager(ctx: Context) {
     }
 
     fun getToken() : String? = prefs.getString(ACCESS_TOKEN_KEY, null)
+
+    fun setUserId(userId: String) {
+        prefs.edit().putString(USER_ID_KEY, userId).apply()
+    }
+
+    fun getUserId() : String? = prefs.getString(USER_ID_KEY, null)
 
     fun isLogged() : Boolean = getToken() != null
 

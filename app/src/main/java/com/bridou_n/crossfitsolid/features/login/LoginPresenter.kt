@@ -1,6 +1,7 @@
 package com.bridou_n.crossfitsolid.features.login
 
 import com.bridou_n.crossfitsolid.API.BookingService
+import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.LoginRequest
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
@@ -13,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
  */
 
 class LoginPresenter(val view: LoginContract.View,
-                     val api: BookingService,
+                     val api: LoginService,
                      val prefs: PreferencesManager) : LoginContract.Presenter {
 
     var disposable: Disposable? = null
@@ -41,10 +42,9 @@ class LoginPresenter(val view: LoginContract.View,
                 .subscribe({ resp ->
                     view.showLoading(false)
 
-                    // Store the username / password & access_token in the sharedPreferences
+                    // Store the username / password & in the sharedPreferences
                     prefs.setUsername(username)
                     prefs.setPassword(password)
-                    prefs.setToken(resp.access_token)
 
                     // Redirect to the logged part
                     view.navigateToMain()

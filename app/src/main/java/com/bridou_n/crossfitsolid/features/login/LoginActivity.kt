@@ -10,6 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bridou_n.crossfitsolid.API.BookingService
+import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.MainActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
@@ -28,7 +29,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     @BindView(R.id.fab_login) lateinit var fabLogin: FloatingActionButton
     @BindView(R.id.loading_indicator) lateinit var loading: AVLoadingIndicatorView
 
-    @Inject lateinit var bookingService: BookingService
+    @Inject lateinit var loginService: LoginService
     @Inject lateinit var prefs: PreferencesManager
 
     lateinit var presenter: LoginContract.Presenter
@@ -40,7 +41,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
         component().inject(this)
 
-        presenter = LoginPresenter(this, bookingService, prefs)
+        presenter = LoginPresenter(this, loginService, prefs)
     }
 
     override fun onResume() {

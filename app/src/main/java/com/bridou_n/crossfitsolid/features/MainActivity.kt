@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.API.BookingService
@@ -11,6 +12,8 @@ import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +34,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+
+        bookingService.getProfile("1480")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ profile ->
+                    Log.d("MainActivity", "$profile")
+                    Log.d("MainActivity", "${profile.billingAddress}" + profile.billingAddress?.city)
+                }, { err ->
+                    err.printStackTrace()
+                })
 
         bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
