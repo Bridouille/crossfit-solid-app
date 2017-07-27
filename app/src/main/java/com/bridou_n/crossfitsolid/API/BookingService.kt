@@ -6,7 +6,6 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.util.*
 
 /**
  * Created by bridou_n on 25/07/2017.

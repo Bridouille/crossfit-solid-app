@@ -3,19 +3,18 @@ package com.bridou_n.crossfitsolid.features
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
+import com.bridou_n.crossfitsolid.features.account.AccountFragment
+import com.bridou_n.crossfitsolid.features.classes.ClassesFragment
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
+import com.bridou_n.crossfitsolid.features.wods.WodsFragment
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
-import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.util.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -37,46 +36,26 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        /*bookingService.getProfile("1480")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ profile ->
-                    Log.d("MainActivity", "$profile")
-                    Log.d("MainActivity", "${profile.billingAddress}" + profile.billingAddress?.city)
-                }, { err ->
-                    err.printStackTrace()
-                })*/
-
-        val start = Date()
-        val end = Date(start.time + 84600000)
-
-
-        bookingService.getGroupActivites(startDate = start.toIso8601Format(), endDate = end.toIso8601Format())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ resp ->
-
-                    for (ga in resp) {
-                        Log.d("MainAct", "${ga.id} -- ${ga.name}")
-                    }
-
-                }, { err ->
-                    err.printStackTrace()
-                })
-
         bottomNav.setOnNavigationItemSelectedListener { item ->
+            var frag: Fragment? = null
+
             when (item.itemId) {
                 R.id.action_classes -> {
-
+                    frag = ClassesFragment.newInstance(prefs.getUserId() ?: "")
                 }
                 R.id.action_wod -> {
-
+                    frag = WodsFragment.newInstance(prefs.getUserId() ?: "")
                 }
                 R.id.action_account -> {
-
+                    frag = AccountFragment.newInstance(prefs.getUserId() ?: "")
                 }
+            }
+
+            if (frag != null) {
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, frag).commit()
             }
             true
         }
+        bottomNav.selectedItemId = R.id.action_classes
     }
 }
