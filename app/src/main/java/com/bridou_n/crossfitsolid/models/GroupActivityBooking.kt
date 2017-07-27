@@ -1,5 +1,7 @@
 package com.bridou_n.crossfitsolid.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -12,4 +14,33 @@ data class GroupActivityBooking(@SerializedName("type") val type: String?,
                                 @SerializedName("customer") val customer: Profile?,
                                 @SerializedName("duration") val duration: Duration?,
                                 @SerializedName("groupActivityBooking") val groupActivityBooking: GroupActivityBookingSummary?,
-                                @SerializedName("additionToEventBooking") val additionToEventBooking: String?)
+                                @SerializedName("additionToEventBooking") val additionToEventBooking: String?) : Parcelable {
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<GroupActivityBooking> = object : Parcelable.Creator<GroupActivityBooking> {
+            override fun createFromParcel(source: Parcel): GroupActivityBooking = GroupActivityBooking(source)
+            override fun newArray(size: Int): Array<GroupActivityBooking?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(
+    source.readString(),
+    source.readParcelable<GroupActivitySummary>(GroupActivitySummary::class.java.classLoader),
+    source.readParcelable<Business>(Business::class.java.classLoader),
+    source.readParcelable<Profile>(Profile::class.java.classLoader),
+    source.readParcelable<Duration>(Duration::class.java.classLoader),
+    source.readParcelable<GroupActivityBookingSummary>(GroupActivityBookingSummary::class.java.classLoader),
+    source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(type)
+        dest.writeParcelable(groupActivity, 0)
+        dest.writeParcelable(businessUnit, 0)
+        dest.writeParcelable(customer, 0)
+        dest.writeParcelable(duration, 0)
+        dest.writeParcelable(groupActivityBooking, 0)
+        dest.writeString(additionToEventBooking)
+    }
+}

@@ -1,5 +1,6 @@
 package com.bridou_n.crossfitsolid.features.classes
 
+import android.text.format.DateUtils
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.models.GroupActivity
@@ -29,7 +30,7 @@ class ClassesPresenter(val view: ClassesContract.View,
 
     override fun refresh() {
         val start = Date()
-        val end = Date(start.time + 7 * 24 * 60 * 60 * 1000)
+        val end = Date(start.time + 7 * DateUtils.DAY_IN_MILLIS)
 
         view.showLoading(true)
         disposable = Single.zip(
@@ -41,7 +42,6 @@ class ClassesPresenter(val view: ClassesContract.View,
                     for (ga in allActivites) {
                         val activityId = ga.id
 
-                        Log.d("ClassesPresenter", "ActId: $activityId")
                         for (booked in myActivities) {
                             if (activityId == booked.groupActivity?.id) {
                                 Log.d("ClassesPresenter", "Found one booked class : ${ga.name}")

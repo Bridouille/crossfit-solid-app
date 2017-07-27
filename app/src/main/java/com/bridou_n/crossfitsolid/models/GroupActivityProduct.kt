@@ -1,5 +1,7 @@
 package com.bridou_n.crossfitsolid.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -7,4 +9,23 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class GroupActivityProduct(@SerializedName("id") val id: Int?,
-                                @SerializedName("name") val name: String?)
+                                @SerializedName("name") val name: String?) : Parcelable {
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<GroupActivityProduct> = object : Parcelable.Creator<GroupActivityProduct> {
+            override fun createFromParcel(source: Parcel): GroupActivityProduct = GroupActivityProduct(source)
+            override fun newArray(size: Int): Array<GroupActivityProduct?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(
+    source.readValue(Int::class.java.classLoader) as Int?,
+    source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeValue(id)
+        dest.writeString(name)
+    }
+}

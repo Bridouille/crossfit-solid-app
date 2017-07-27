@@ -22,3 +22,9 @@ fun Date.fromIso8601Format(dateString: String) : Date {
 }
 
 fun getIso8601Format() : String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
+fun Date.getDayString() : String {
+    val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
+
+    return sdf.format(this)
+}

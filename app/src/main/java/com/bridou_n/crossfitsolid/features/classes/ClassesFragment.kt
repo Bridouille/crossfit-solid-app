@@ -1,16 +1,20 @@
 package com.bridou_n.crossfitsolid.features.classes
 
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
-import com.bridou_n.crossfitsolid.utils.extensionFunctions.showSnackbar
 import javax.inject.Inject
 
 /**
@@ -18,6 +22,10 @@ import javax.inject.Inject
  */
 
 class ClassesFragment : Fragment(), ClassesContract.View {
+
+    @BindView(R.id.container) lateinit var container: ConstraintLayout
+    @BindView(R.id.sliding_tabs) lateinit var tabs: TabLayout
+    @BindView(R.id.viewpager) lateinit var viewPager: ViewPager
 
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
@@ -31,8 +39,11 @@ class ClassesFragment : Fragment(), ClassesContract.View {
         presenter = ClassesPresenter(this, bookingService, prefs)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_classes, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val v = inflater.inflate(R.layout.fragment_classes, container, false)
+        ButterKnife.bind(this, v)
+
+        return v
     }
 
     override fun onResume() {
@@ -41,7 +52,8 @@ class ClassesFragment : Fragment(), ClassesContract.View {
     }
 
     override fun displayClasses(bookings: Array<GroupActivity>) {
-
+        viewPager.adapter = DaysFragmentPagerAdapter(childFragmentManager, context, bookings)
+        tabs.setupWithViewPager(viewPager)
     }
 
     override fun showLoading(show: Boolean) {

@@ -1,5 +1,7 @@
 package com.bridou_n.crossfitsolid.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -22,4 +24,53 @@ data class Profile(@SerializedName("id") val id: Int?,
                    @SerializedName("cardNumber") val cardNumber: String?,
                    @SerializedName("acceptedBookingTerms") val acceptedBookingTerms: Boolean?,
                    @SerializedName("acceptedSubscriptionTerms") val acceptedSubscriptionTerms: Boolean?,
-                   @SerializedName("profileImage") val profileImage: String?)
+                   @SerializedName("profileImage") val profileImage: String?) : Parcelable {
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<Profile> = object : Parcelable.Creator<Profile> {
+            override fun createFromParcel(source: Parcel): Profile = Profile(source)
+            override fun newArray(size: Int): Array<Profile?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(
+    source.readValue(Int::class.java.classLoader) as Int?,
+    source.readString(),
+    source.readString(),
+    source.readString(),
+    source.readString(),
+    source.readString(),
+    source.readParcelable<Address>(Address::class.java.classLoader),
+    source.readParcelable<Address>(Address::class.java.classLoader),
+    source.readString(),
+    source.readParcelable<Business>(Business::class.java.classLoader),
+    source.readParcelable<CustomerType>(CustomerType::class.java.classLoader),
+    source.readString(),
+    source.readString(),
+    source.readString(),
+    source.readValue(Boolean::class.java.classLoader) as Boolean?,
+    source.readValue(Boolean::class.java.classLoader) as Boolean?,
+    source.readString()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeValue(id)
+        dest.writeString(firstName)
+        dest.writeString(lastName)
+        dest.writeString(sex)
+        dest.writeString(ssn)
+        dest.writeString(birthDate)
+        dest.writeParcelable(shippingAddress, 0)
+        dest.writeParcelable(billingAddress, 0)
+        dest.writeString(mobilePhone)
+        dest.writeParcelable(businessUnit, 0)
+        dest.writeParcelable(customerType, 0)
+        dest.writeString(customerTypeEndDate)
+        dest.writeString(customerNumber)
+        dest.writeString(cardNumber)
+        dest.writeValue(acceptedBookingTerms)
+        dest.writeValue(acceptedSubscriptionTerms)
+        dest.writeString(profileImage)
+    }
+}
