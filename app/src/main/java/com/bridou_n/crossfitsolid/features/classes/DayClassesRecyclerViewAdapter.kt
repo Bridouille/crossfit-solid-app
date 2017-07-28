@@ -141,4 +141,10 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
     }
 
     override fun getItemCount(): Int = items.size + 1
+
+    fun refreshItems(newItems: Array<GroupActivity>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
+    }
 }

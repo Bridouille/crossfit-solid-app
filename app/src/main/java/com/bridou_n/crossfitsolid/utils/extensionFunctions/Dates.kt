@@ -16,7 +16,6 @@ fun getTimeZone() = TimeZone.getTimeZone("GMT+4")
 fun Date.toIso8601Format() : String {
     val sdf: SimpleDateFormat = SimpleDateFormat(getIso8601Format(), Locale.US)
 
-    sdf.timeZone = TimeZone.getTimeZone("GMT")
     return sdf.format(this)
 }
 
