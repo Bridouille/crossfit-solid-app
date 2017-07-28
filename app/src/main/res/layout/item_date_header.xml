@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/calendar_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/date_header"
+        app:layout_constraintBottom_toBottomOf="@+id/date_header"
+        app:layout_constraintRight_toLeftOf="@+id/date_header"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:tint="@color/colorSecondaryText"
+        app:srcCompat="@drawable/ic_event_black_24dp"
+        />
+
+    <TextView
+        android:id="@+id/date_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/calendar_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/colorSecondaryText"
+        android:gravity="center"
+        tools:text="Lundi 17 Juillet"
+        />
+
+</android.support.constraint.ConstraintLayout>

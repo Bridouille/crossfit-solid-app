@@ -23,10 +23,25 @@ import com.bridou_n.crossfitsolid.utils.extensionFunctions.show
  * Created by bridou_n on 27/07/2017.
  */
 
-class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>) : RecyclerView.Adapter<DayClassesRecyclerViewAdapter.ActivitiesHolder>() {
+class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
+                                    val currentDate: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val VIEW_TYPE_HEADER = 0
+    private val VIEW_TYPE_ACTIVITY = 1
 
-    class ActivitiesHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        @BindView(R.id.date_header) lateinit var dateTv: TextView
+
+        init {
+            ButterKnife.bind(this, view)
+        }
+
+        fun bindView(date: String) {
+            dateTv.text = date
+        }
+    }
+
+    class ActivityHolder(val view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.card_view) lateinit var cardView: CardView
         @BindView(R.id.title) lateinit var title: TextView
         @BindView(R.id.subtitle) lateinit var startEnd: TextView
@@ -99,15 +114,31 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>) : Recyc
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivitiesHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false)
-
-        return ActivitiesHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) VIEW_TYPE_HEADER else VIEW_TYPE_ACTIVITY
     }
 
-    override fun onBindViewHolder(holder: ActivitiesHolder, position: Int) {
-        holder.bindView(items[position])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_HEADER -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_date_header, parent, false)
+
+                HeaderHolder(view)
+            }
+            else -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false)
+
+                ActivityHolder(view)
+            }
+        }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is HeaderHolder -> holder.bindView(currentDate)
+            is ActivityHolder -> holder.bindView(items[position - 1])
+        }
+    }
+
+    override fun getItemCount(): Int = items.size + 1
 }

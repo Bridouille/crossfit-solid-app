@@ -52,7 +52,8 @@ class ClassesFragment : Fragment(), ClassesContract.View {
     }
 
     override fun displayClasses(bookings: Array<GroupActivity>) {
-        viewPager.adapter = DaysFragmentPagerAdapter(childFragmentManager, context, bookings)
+        val fragmentPagerAdpter = DaysFragmentPagerAdapter(childFragmentManager, context, bookings)
+        viewPager.adapter = fragmentPagerAdpter
         tabs.setupWithViewPager(viewPager)
     }
 

@@ -1,6 +1,5 @@
 package com.bridou_n.crossfitsolid.features.classes
 
-import android.text.format.DateUtils
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.models.GroupActivity
@@ -12,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import org.joda.time.LocalDate
 import java.util.*
 
 /**
@@ -30,7 +30,7 @@ class ClassesPresenter(val view: ClassesContract.View,
 
     override fun refresh() {
         val start = Date()
-        val end = Date(start.time + 7 * DateUtils.DAY_IN_MILLIS)
+        val end = LocalDate.now().plusDays(7).toDate()
 
         view.showLoading(true)
         disposable = Single.zip(

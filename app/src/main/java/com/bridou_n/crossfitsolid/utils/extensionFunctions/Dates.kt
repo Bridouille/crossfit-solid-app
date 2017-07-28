@@ -1,5 +1,6 @@
 package com.bridou_n.crossfitsolid.utils.extensionFunctions
 
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,7 +16,7 @@ fun getTimeZone() = TimeZone.getTimeZone("GMT+4")
 fun Date.toIso8601Format() : String {
     val sdf: SimpleDateFormat = SimpleDateFormat(getIso8601Format(), Locale.US)
 
-    sdf.timeZone = getTimeZone()
+    sdf.timeZone = TimeZone.getTimeZone("GMT")
     return sdf.format(this)
 }
 
@@ -28,6 +29,19 @@ fun Date.fromIso8601Format(dateString: String) : Date {
 
 fun Date.getDayString() : String {
     val sdf = SimpleDateFormat("EEEE", Locale.getDefault())
+
+    sdf.timeZone = getTimeZone()
+    return sdf.format(this)
+}
+
+fun Date.getFullDate() : String {
+    val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
+
+    return df.format(this)
+}
+
+fun Date.getMonthString() : String {
+    val sdf = SimpleDateFormat("MMM", Locale.getDefault())
 
     sdf.timeZone = getTimeZone()
     return sdf.format(this)

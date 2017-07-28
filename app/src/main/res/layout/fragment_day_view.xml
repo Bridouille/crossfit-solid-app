@@ -12,10 +12,12 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="8dp"
-        android:clipToPadding="false"
         tools:visibility="gone"
         />
+    <!--
+        android:paddingTop="8dp"
+        android:clipToPadding="false"
+        -->
 
     <!-- Empty view -->
     <android.support.constraint.ConstraintLayout
@@ -26,13 +28,17 @@
         tools:visibility="visible"
         >
 
+        <include
+            android:id="@+id/date_header_container"
+            layout="@layout/item_date_header" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_header_container"
             app:layout_constraintBottom_toTopOf="@+id/empty_text"
             app:layout_constraintVertical_chainStyle="packed"
             app:lottie_fileName="empty_status.json"
