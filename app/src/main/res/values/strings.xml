@@ -13,4 +13,12 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="canceled">Canceled</string>
+    <string name="till">till</string>
+    <string name="slots_left">Slots left</string>
+    <string name="in_queue">In queue</string>
+    <string name="open_gym">Open gym</string>
+    <string name="book_now">Book now</string>
+    <string name="cancel_my_booking">cancel my booking</string>
+    <string name="join_the_waiting_list">Join the waiting list</string>
+    <string name="no_classes_this_day">Looks like there is no classes this day!</string>
 </resources>

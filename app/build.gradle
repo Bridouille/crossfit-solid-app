@@ -75,4 +75,7 @@ dependencies {
 
     // JodaTime
     compile 'net.danlew:android.joda:2.9.9'
+
+    // Lottie
+    compile 'com.airbnb.android:lottie:2.1.0'
 }

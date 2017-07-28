@@ -26,6 +26,6 @@ class AppSingleton : Application() {
                 .networkModule(NetworkModule())
                 .build()
 
-        JodaTimeAndroid.init(this);
+        JodaTimeAndroid.init(this)
     }
 }

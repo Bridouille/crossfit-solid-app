@@ -15,7 +15,7 @@ data class GroupActivity(@SerializedName("id") val id: Int?,
                          @SerializedName("groupActivityProduct") val groupActivityProduct: GroupActivityProduct?,
                          @SerializedName("businessUnit") val business: Business?,
                          @SerializedName("locations") val locations: Array<Location>?,
-                         @SerializedName("insctructors") val instructos: Array<Instructor>?,
+                         @SerializedName("instructors") val instructors: Array<Instructor>?,
                          @SerializedName("bookableEarliest") val bookableEarliest: Date?,
                          @SerializedName("bookableLatest") val bookableLatest: Date?,
                          @SerializedName("externalMessage") val externalMessage: String?,
@@ -52,7 +52,7 @@ data class GroupActivity(@SerializedName("id") val id: Int?,
         dest.writeParcelable(groupActivityProduct, 0)
         dest.writeParcelable(business, 0)
         dest.writeParcelableArray(locations, 0)
-        dest.writeParcelableArray(instructos, 0)
+        dest.writeParcelableArray(instructors, 0)
         dest.writeSerializable(bookableEarliest)
         dest.writeSerializable(bookableLatest)
         dest.writeString(externalMessage)

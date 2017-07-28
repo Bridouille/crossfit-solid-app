@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.text.format.DateUtils
+import android.util.Log
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.getDayString
@@ -31,14 +32,23 @@ class DaysFragmentPagerAdapter(val fm: FragmentManager,
             }
             days[start.dayOfWeek]?.add(ga)
         }
+
+        Log.d("DaysFragment", "1st day of the week : ${days[1]}")
+        Log.d("DaysFragment", "2nd day of the week : ${days[2]}")
+        Log.d("DaysFragment", "3rd day of the week : ${days[3]}")
     }
 
     override fun getItem(position: Int): Fragment {
-        return DayViewFragment.newInstance(days[position + 1] ?: arrayListOf<GroupActivity>())
+        var idx =  LocalDate.now().dayOfWeek + position
+
+        if (idx > 7) {
+            idx %= 7
+        }
+        return DayViewFragment.newInstance(days[idx] ?: arrayListOf<GroupActivity>())
     }
 
     override fun getCount(): Int {
-        return 7 // We only diplay data for one week
+        return 7 // We only display data for one week
     }
 
     // TODO: update design of this
