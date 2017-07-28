@@ -9,4 +9,16 @@
 
     <color name="colorSecondaryText">#757575</color>
     <color name="colorPrimaryText">#212121</color>
+
+    <color name="bookableClassBackground">#1976D2</color>
+    <color name="bookableClassSubtitle">#BBDEFB</color>
+
+    <color name="bookedClassBackground">#4CAF50</color>
+    <color name="bookedClassSubtitle">#C8E6C9</color>
+
+    <color name="waitingClassBackground">#FFC107</color>
+    <color name="waitingClassSubtitle">#FFECB3</color>
+
+    <color name="canceledClassBackground">#F44336</color>
+    <color name="canceledClassSubtitle">#FFCDD2</color>
 </resources>
