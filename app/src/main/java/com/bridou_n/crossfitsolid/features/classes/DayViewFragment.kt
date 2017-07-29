@@ -86,7 +86,9 @@ class DayViewFragment : Fragment(), DayViewContract.View {
 
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(context)
-        adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate())
+        adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate(), {
+            activityId, isBooking -> presenter.bookClass(activityId, isBooking)
+        })
         rv.adapter = adapter
 
         return v

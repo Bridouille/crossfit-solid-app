@@ -5,7 +5,6 @@ import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.models.GroupActivityBooking
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
-import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Single
@@ -14,8 +13,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by bridou_n on 28/07/2017.
@@ -80,11 +77,8 @@ class DayViewPresenter(val view: DayViewContract.View,
         disposable?.dispose()
     }
 
-    override fun bookClass() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun unbookClass() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun bookClass(groupActivityId: Int, isBooking: Boolean) {
+        // TODO show popup to ask confirmation of the booking
+        Log.d("DayViewPresenter", "book class : $groupActivityId, isBooking: $isBooking")
     }
 }

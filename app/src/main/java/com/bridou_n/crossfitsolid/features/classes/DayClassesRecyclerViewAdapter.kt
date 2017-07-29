@@ -12,6 +12,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.BindViews
 import butterknife.ButterKnife
+import butterknife.OnClick
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.getHourMinute
@@ -24,7 +25,8 @@ import com.bridou_n.crossfitsolid.utils.extensionFunctions.show
  */
 
 class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
-                                    val currentDate: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                    val currentDate: String,
+                                    val actionCallback : (Int, Boolean) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_HEADER = 0
     private val VIEW_TYPE_ACTIVITY = 1
@@ -41,7 +43,8 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
         }
     }
 
-    class ActivityHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ActivityHolder(val view: View,
+                         val actionCallback: (Int, Boolean) -> Unit) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.card_view) lateinit var cardView: CardView
         @BindView(R.id.title) lateinit var title: TextView
         @BindView(R.id.subtitle) lateinit var startEnd: TextView
@@ -57,6 +60,8 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
         @BindViews(R.id.subtitle, R.id.separator, R.id.instructor, R.id.canceled_label)
         lateinit var coloredViews: Array<TextView>
 
+        lateinit var activity: GroupActivity
+
         init {
             ButterKnife.bind(this, view)
         }
@@ -68,7 +73,8 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
             CANCELED(R.color.canceledClassBackground, R.color.canceledClassSubtitle)
         }
 
-        fun bindView(activity: GroupActivity) {
+        fun bindView(act: GroupActivity) {
+            activity = act
             title.text = activity.name
             startEnd.text = "${activity.duration?.start?.getHourMinute()} ${view.context.getString(R.string.till)} ${activity.duration?.end?.getHourMinute()}"
             instructor.text = activity.instructors?.get(0)?.name ?: view.context.getString(R.string.open_gym)
@@ -102,7 +108,11 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                 slotsContainer.show()
                 canceled.hideView()
             }
+        }
 
+        @OnClick(R.id.action_btn)
+        fun onActionclicked() {
+            actionCallback(activity.id ?: -1, actionBtn.text != view.context.getString(R.string.cancel_my_booking))
         }
 
         fun updateColors(colors: State) {
@@ -111,7 +121,6 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                 view.setTextColor(ContextCompat.getColor(view.context, colors.subtitleColor))
             })
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -128,7 +137,7 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false)
 
-                ActivityHolder(view)
+                ActivityHolder(view, actionCallback)
             }
         }
     }

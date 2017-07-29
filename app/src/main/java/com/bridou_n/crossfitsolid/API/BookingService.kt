@@ -1,12 +1,11 @@
 package com.bridou_n.crossfitsolid.API
 
+import com.bridou_n.crossfitsolid.models.BookingRequest
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.models.GroupActivityBooking
 import com.bridou_n.crossfitsolid.models.Profile
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * Created by bridou_n on 25/07/2017.
@@ -24,4 +23,8 @@ interface BookingService {
 
     @GET("customers/{customerId}/bookings/groupactivities")
     fun getMyGroupActivities(@Path("customerId") customerId: String) : Single<Array<GroupActivityBooking>>
+
+    @POST("customers/{customerId}/bookings/groupactivites")
+    fun bookActivity(@Path("customerId") customerId: String,
+                     @Body activity: BookingRequest)
 }
