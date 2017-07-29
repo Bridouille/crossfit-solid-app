@@ -5,7 +5,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,7 @@ import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.*
 import org.joda.time.LocalDate
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 /**
@@ -51,9 +48,10 @@ class DayViewFragment : Fragment(), DayViewContract.View {
 
     @BindView(R.id.empty_container) lateinit var emptyContainer: ConstraintLayout
 
+    @BindView(R.id.loading_container) lateinit var loadingContainer: ConstraintLayout
+
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
-
 
     var position: Int? = null
     lateinit var currentDate: LocalDate
@@ -92,20 +90,27 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         presenter.start()
     }
 
-    // TODO update this with loading view
-    override fun showLoading(show: Boolean) {
+    fun hideAll() {
+        loadingContainer.hideView()
+        emptyContainer.hideView()
         rv.hideView()
-        emptyContainer.show()
+    }
+
+    override fun showLoading(show: Boolean) {
+        hideAll()
+        if (show) {
+            loadingContainer.show()
+        }
     }
 
     override fun showEmptyView() {
-        rv.hideView()
+        hideAll()
         emptyContainer.show()
     }
 
     override fun displayClasses(bookings: Array<GroupActivity>) {
+        hideAll()
         adapter.refreshItems(bookings)
-        emptyContainer.hideView()
         rv.show()
     }
 
