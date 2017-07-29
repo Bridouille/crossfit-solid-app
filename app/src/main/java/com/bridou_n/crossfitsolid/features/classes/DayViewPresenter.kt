@@ -7,6 +7,7 @@ import com.bridou_n.crossfitsolid.models.GroupActivityBooking
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -51,11 +52,19 @@ class DayViewPresenter(val view: DayViewContract.View,
                                 .filter { activityId == it.groupActivity?.id }
                                 .forEach { ga.slots?.isBooked = true }
                     }
-
                     allActivites
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .retryWhen { errors ->
+                    errors.flatMap {
+                        error: Throwable ->
+
+                        view.showError(error.message)
+                            .toFlowable(BackpressureStrategy.LATEST)
+                            .doOnNext { _ -> view.showLoading(true) }
+                    }
+                }
                 .subscribe({ results ->
                     view.showLoading(false)
 
@@ -64,9 +73,6 @@ class DayViewPresenter(val view: DayViewContract.View,
                     } else {
                         view.displayClasses(results)
                     }
-                }, { err ->
-                    view.showLoading(false)
-                    view.showError(err.message)
                 })
     }
 

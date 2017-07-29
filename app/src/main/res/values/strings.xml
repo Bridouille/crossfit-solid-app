@@ -22,4 +22,6 @@
     <string name="join_the_waiting_list">Join the waiting list</string>
     <string name="no_classes_this_day">Looks like there is no classes this day!</string>
     <string name="loading_classes">Try doing a 1\' AMRAP burpees while it\'s loading..</string>
+    <string name="retry">Retry</string>
+    <string name="an_error_occured">Oops. An error occured. Check your connectivity and try again later!</string>
 </resources>

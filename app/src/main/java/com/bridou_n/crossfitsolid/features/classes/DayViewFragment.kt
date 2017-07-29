@@ -2,13 +2,16 @@ package com.bridou_n.crossfitsolid.features.classes
 
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.widget.Button
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -17,6 +20,8 @@ import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.*
+import com.jakewharton.rxbinding2.view.RxView
+import io.reactivex.Observable
 import org.joda.time.LocalDate
 import javax.inject.Inject
 
@@ -42,13 +47,18 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         }
     }
 
-    @BindView(R.id.day_view_container) lateinit var dayViewContainer: FrameLayout
-    @BindView(R.id.date_header_container) lateinit var dateHeaderCotnainer: ConstraintLayout
+    @BindView(R.id.day_view_container) lateinit var dayViewContainer: CoordinatorLayout
+    @BindView(R.id.date_header_container) lateinit var dateHeaderContainer: ConstraintLayout
+    @BindView(R.id.date_header) lateinit  var dateHeaderTv: TextView
     @BindView(R.id.rv) lateinit var rv: RecyclerView
 
     @BindView(R.id.empty_container) lateinit var emptyContainer: ConstraintLayout
 
     @BindView(R.id.loading_container) lateinit var loadingContainer: ConstraintLayout
+
+    @BindView(R.id.error_container) lateinit var errorContainer: ConstraintLayout
+    @BindView(R.id.error_text) lateinit var errorText: TextView
+    @BindView(R.id.retry_btn) lateinit var retryBtn: Button
 
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
@@ -72,10 +82,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         val v = inflater.inflate(R.layout.fragment_day_view, container, false)
         ButterKnife.bind(this, v)
 
-        // todo rewrite this with butterknife ??
-        val dateHeaderTv = dateHeaderCotnainer.findViewById(R.id.date_header) as TextView
-
-        dateHeaderTv?.text = currentDate.toDate().getFullDate()
+        dateHeaderTv.text = currentDate.toDate().getFullDate()
 
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(context)
@@ -93,6 +100,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
     fun hideAll() {
         loadingContainer.hideView()
         emptyContainer.hideView()
+        errorContainer.hideView()
         rv.hideView()
     }
 
@@ -114,10 +122,12 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         rv.show()
     }
 
-    override fun showError(err: String?) {
-        if (err != null) {
-            showSnackbar(dayViewContainer, err)
-        }
+    override fun showError(err: String?) : Observable<Int> {
+        hideAll()
+        errorContainer.show()
+        errorText.text = err ?: context.getString(R.string.an_error_occured)
+
+        return RxView.clicks(retryBtn).map { _ -> 1 }
     }
 
     override fun onPause() {
