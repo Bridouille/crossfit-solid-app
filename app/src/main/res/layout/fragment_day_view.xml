@@ -141,7 +141,7 @@
                 android:gravity="center"
                 android:layout_marginTop="32dp"
                 android:textSize="16sp"
-                tools:text="Oops an error occurred. Check your internet connexion and retry later!"
+                tools:text="@string/an_error_occurred"
                 />
 
             <Button

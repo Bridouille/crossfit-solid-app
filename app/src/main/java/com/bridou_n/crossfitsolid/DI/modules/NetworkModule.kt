@@ -41,7 +41,7 @@ import javax.inject.Singleton
     }
 
     @Provides @Singleton @Named("logging")
-    fun provideLoggingInterceptor(prefs: PreferencesManager, gson: Gson) : Interceptor {
+    fun provideLoggingInterceptor() : Interceptor {
         return Interceptor { chain ->
             val req = chain.request()
 

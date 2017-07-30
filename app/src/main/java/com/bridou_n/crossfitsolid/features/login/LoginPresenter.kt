@@ -1,6 +1,5 @@
 package com.bridou_n.crossfitsolid.features.login
 
-import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.LoginRequest
@@ -51,7 +50,7 @@ class LoginPresenter(val view: LoginContract.View,
 
                     // Redirect to the logged part
                     view.navigateToMain()
-                }, { err ->
+                }, { _ ->
                     view.showLoading(false)
 
                     view.showError(R.string.wrong_username_or_password)

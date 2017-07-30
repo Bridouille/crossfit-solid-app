@@ -26,7 +26,7 @@ import com.bridou_n.crossfitsolid.utils.extensionFunctions.show
 
 class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                                     val currentDate: String,
-                                    val actionCallback : (Int, Boolean) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                    val actionCallback : (Int, Boolean, String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_HEADER = 0
     private val VIEW_TYPE_ACTIVITY = 1
@@ -44,7 +44,8 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
     }
 
     class ActivityHolder(val view: View,
-                         val actionCallback: (Int, Boolean) -> Unit) : RecyclerView.ViewHolder(view) {
+                         val currentDate: String,
+                         val actionCallback: (Int, Boolean, String) -> Unit) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.card_view) lateinit var cardView: CardView
         @BindView(R.id.title) lateinit var title: TextView
         @BindView(R.id.subtitle) lateinit var startEnd: TextView
@@ -111,11 +112,16 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
         }
 
         @OnClick(R.id.action_btn)
-        fun onActionclicked() {
+        fun onActionClicked() {
             val isBooked =  activity.slots?.isBooked ?: false
             val bookingId = if (isBooked) activity.groupActivityProduct?.id ?: -1 else activity.id ?: -1
+            val message = if (!isBooked) {
+                String.format(view.context.getString(R.string.booking_confirmation_text), title.text, currentDate, startEnd.text, instructor.text)
+            } else {
+                view.context.getString(R.string.cancel_booking_confirmation)
+            }
 
-            actionCallback(bookingId, isBooked)
+            actionCallback(bookingId, isBooked, message)
         }
 
         fun updateColors(colors: State) {
@@ -140,7 +146,7 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_activity, parent, false)
 
-                ActivityHolder(view, actionCallback)
+                ActivityHolder(view, currentDate, actionCallback)
             }
         }
     }

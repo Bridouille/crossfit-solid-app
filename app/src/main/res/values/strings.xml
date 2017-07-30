@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crossfit Solid</string>
+    <string name="app_name">CrossFit Solid</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="username_or_password_empty">Username or password empty</string>
@@ -23,5 +23,8 @@
     <string name="no_classes_this_day">Looks like there is no classes this day!</string>
     <string name="loading_classes">Try doing a 1\' AMRAP burpees while it\'s loading..</string>
     <string name="retry">Retry</string>
-    <string name="an_error_occured">Oops. An error occured. Check your connectivity and try again later!</string>
+    <string name="an_error_occurred">Oops. An error occurred. Check your connectivity and try again later!</string>
+    <string name="booking_confirmation_text">Are you sure you want to book: %1$s on %2$s at %3$s with %4$s?</string>
+    <string name="cancel_booking_confirmation">Are you sure you want to cancel this booking?</string>
+    <string name="confirm">Confirm</string>
 </resources>

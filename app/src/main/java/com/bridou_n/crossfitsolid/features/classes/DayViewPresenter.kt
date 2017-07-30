@@ -1,5 +1,6 @@
 package com.bridou_n.crossfitsolid.features.classes
 
+import android.text.format.DateUtils
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.models.BookingError
@@ -7,6 +8,7 @@ import com.bridou_n.crossfitsolid.models.BookingRequest
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.models.GroupActivityBooking
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.isToday
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -19,6 +21,7 @@ import io.reactivex.schedulers.Schedulers
 import org.joda.time.LocalDate
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.*
 
 /**
  * Created by bridou_n on 28/07/2017.
@@ -37,8 +40,7 @@ class DayViewPresenter(val view: DayViewContract.View,
     }
 
     override fun refresh() {
-        // TODO: if it's today, make the start date not starting at start of day
-        val start = currentDate.toDateTimeAtStartOfDay().toDate()
+        val start = if (currentDate.isToday()) Date(Date().time - (DateUtils.HOUR_IN_MILLIS * 2)) else currentDate.toDateTimeAtStartOfDay().toDate()
         val end = currentDate.plusDays(1).toDateTimeAtStartOfDay().toDate()
 
         view.showLoading(true)
@@ -88,9 +90,6 @@ class DayViewPresenter(val view: DayViewContract.View,
     }
 
     override fun bookClass(groupActivityId: Int, isBooked: Boolean) {
-        // TODO show popup to ask confirmation of the booking
-        Log.d("DayViewPresenter", "book class : $groupActivityId, isBooking: $isBooked")
-
         val req = if (isBooked) {
             api.cancelBooking(prefs.getUserId() ?: "", groupActivityId, id = GroupActivity(groupActivityId))
         } else {

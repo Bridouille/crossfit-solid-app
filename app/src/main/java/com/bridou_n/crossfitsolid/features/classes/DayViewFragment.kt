@@ -1,11 +1,13 @@
 package com.bridou_n.crossfitsolid.features.classes
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -92,7 +94,17 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(context)
         adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate(), {
-            activityId, isBooked -> presenter.bookClass(activityId, isBooked)
+            activityId, isBooked, message ->
+
+            val builder = AlertDialog.Builder(activity, R.style.AppCompatAlertDialogStyle)
+                    .setTitle(getString(R.string.confirm))
+                    .setMessage(message)
+                    .setPositiveButton(getString(android.R.string.ok), DialogInterface.OnClickListener {
+                        _, _ -> presenter.bookClass(activityId, isBooked)
+                    })
+                    .setNegativeButton(getString(android.R.string.cancel), null)
+
+            builder.show()
         })
         rv.adapter = adapter
 
@@ -133,13 +145,13 @@ class DayViewFragment : Fragment(), DayViewContract.View {
     override fun showError(err: String?) : Observable<Int> {
         hideAll()
         errorContainer.show()
-        errorText.text = err ?: context.getString(R.string.an_error_occured)
+        errorText.text = err ?: context.getString(R.string.an_error_occurred)
 
         return RxView.clicks(retryBtn).map { _ -> 1 }
     }
 
     override fun showSmallError(err: String?) {
-        snackBar(dayViewContainer, err ?: getString(R.string.an_error_occured)).show()
+        snackBar(dayViewContainer, err ?: getString(R.string.an_error_occurred)).show()
     }
 
     override fun onPause() {

@@ -43,6 +43,7 @@
     </style>
     <!-- /SplashTheme -->
 
+    <!-- TabLayout styles -->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/colorPrimary</item>
         <item name="tabIndicatorHeight">2dp</item>
@@ -59,4 +60,10 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <!-- AlertDialog styles -->
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
 </resources>

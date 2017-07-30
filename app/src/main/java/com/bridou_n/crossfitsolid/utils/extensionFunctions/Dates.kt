@@ -1,5 +1,6 @@
 package com.bridou_n.crossfitsolid.utils.extensionFunctions
 
+import org.joda.time.LocalDate
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,16 +40,11 @@ fun Date.getFullDate() : String {
     return df.format(this)
 }
 
-fun Date.getMonthString() : String {
-    val sdf = SimpleDateFormat("MMM", Locale.getDefault())
-
-    sdf.timeZone = getTimeZone()
-    return sdf.format(this)
-}
-
 fun Date.getHourMinute() : String {
     val sdf = SimpleDateFormat("HH:mm", Locale.US)
 
     sdf.timeZone = getTimeZone()
     return sdf.format(this)
 }
+
+fun LocalDate.isToday() : Boolean = this.compareTo(LocalDate()) == 0
