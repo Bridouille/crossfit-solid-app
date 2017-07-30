@@ -20,7 +20,8 @@ data class GroupActivity(@SerializedName("id") val id: Int? = -1,
                          @SerializedName("bookableLatest") val bookableLatest: Date? = Date(),
                          @SerializedName("externalMessage") val externalMessage: String? = "",
                          @SerializedName("cancelled") val cancelled: Boolean? = false,
-                         @SerializedName("slots") val slots: Slots? = null) : Parcelable {
+                         @SerializedName("slots") val slots: Slots? = null,
+                         var booking: GroupActivityBooking? = null) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<GroupActivity> = object : Parcelable.Creator<GroupActivity> {
             override fun createFromParcel(source: Parcel): GroupActivity = GroupActivity(source)
@@ -40,7 +41,8 @@ data class GroupActivity(@SerializedName("id") val id: Int? = -1,
     source.readSerializable() as Date?,
     source.readString(),
     source.readValue(Boolean::class.java.classLoader) as Boolean?,
-    source.readParcelable<Slots>(Slots::class.java.classLoader)
+    source.readParcelable<Slots>(Slots::class.java.classLoader),
+    source.readParcelable<GroupActivityBooking>(GroupActivityBooking::class.java.classLoader)
     )
 
     override fun describeContents() = 0
@@ -58,5 +60,6 @@ data class GroupActivity(@SerializedName("id") val id: Int? = -1,
         dest.writeString(externalMessage)
         dest.writeValue(cancelled)
         dest.writeParcelable(slots, 0)
+        dest.writeParcelable(booking, 0)
     }
 }

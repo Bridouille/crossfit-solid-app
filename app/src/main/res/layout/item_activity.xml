@@ -128,6 +128,7 @@
                 <TextView
                     android:id="@+id/slot_label"
                     android:layout_width="match_parent"
+                    android:ems="5"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/slot_number"
                     app:layout_constraintLeft_toLeftOf="@+id/slot_number"
@@ -135,7 +136,7 @@
                     android:gravity="center"
                     android:textSize="14sp"
                     android:textColor="@android:color/white"
-                    tools:text="in queue"
+                    tools:text="@string/people_before_you"
                     />
             </LinearLayout>
 

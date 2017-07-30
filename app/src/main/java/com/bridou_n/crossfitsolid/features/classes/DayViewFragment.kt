@@ -4,13 +4,11 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,13 +92,13 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(context)
         adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate(), {
-            activityId, isBooked, message ->
+            bookingId, isBooked, isWaitingList, message ->
 
             val builder = AlertDialog.Builder(activity, R.style.AppCompatAlertDialogStyle)
                     .setTitle(getString(R.string.confirm))
                     .setMessage(message)
                     .setPositiveButton(getString(android.R.string.ok), DialogInterface.OnClickListener {
-                        _, _ -> presenter.bookClass(activityId, isBooked)
+                        _, _ -> presenter.bookClass(bookingId, isBooked, isWaitingList)
                     })
                     .setNegativeButton(getString(android.R.string.cancel), null)
 

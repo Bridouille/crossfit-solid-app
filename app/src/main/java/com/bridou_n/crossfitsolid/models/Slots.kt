@@ -13,8 +13,7 @@ data class Slots(@SerializedName("total") val total: Int?,
                  @SerializedName("reservedForDropin") val reservedForDropin: Int?,
                  @SerializedName("leftToBook") val leftToBook: Int?,
                  @SerializedName("hasWaitingList") val hasWaitingList: Boolean?,
-                 @SerializedName("inWaitingList") val inWaitingList: Int?,
-                 var isBooked: Boolean?) : Parcelable {
+                 @SerializedName("inWaitingList") val inWaitingList: Int?) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Slots> = object : Parcelable.Creator<Slots> {
             override fun createFromParcel(source: Parcel): Slots = Slots(source)
@@ -28,8 +27,7 @@ data class Slots(@SerializedName("total") val total: Int?,
     source.readValue(Int::class.java.classLoader) as Int?,
     source.readValue(Int::class.java.classLoader) as Int?,
     source.readValue(Boolean::class.java.classLoader) as Boolean?,
-    source.readValue(Int::class.java.classLoader) as Int?,
-    source.readValue(Boolean::class.java.classLoader) as Boolean?
+    source.readValue(Int::class.java.classLoader) as Int?
     )
 
     override fun describeContents() = 0
@@ -41,6 +39,5 @@ data class Slots(@SerializedName("total") val total: Int?,
         dest.writeValue(leftToBook)
         dest.writeValue(hasWaitingList)
         dest.writeValue(inWaitingList)
-        dest.writeValue(isBooked)
     }
 }

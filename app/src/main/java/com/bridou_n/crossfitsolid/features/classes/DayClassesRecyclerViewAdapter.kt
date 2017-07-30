@@ -26,7 +26,7 @@ import com.bridou_n.crossfitsolid.utils.extensionFunctions.show
 
 class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                                     val currentDate: String,
-                                    val actionCallback : (Int, Boolean, String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                                    val actionCallback : (Int, Boolean, Boolean, String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_HEADER = 0
     private val VIEW_TYPE_ACTIVITY = 1
@@ -45,7 +45,7 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
 
     class ActivityHolder(val view: View,
                          val currentDate: String,
-                         val actionCallback: (Int, Boolean, String) -> Unit) : RecyclerView.ViewHolder(view) {
+                         val actionCallback: (Int, Boolean, Boolean, String) -> Unit) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.card_view) lateinit var cardView: CardView
         @BindView(R.id.title) lateinit var title: TextView
         @BindView(R.id.subtitle) lateinit var startEnd: TextView
@@ -87,25 +87,41 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                 slotsContainer.hideView()
                 canceled.show()
             } else {
-                slotNumber.text = activity.slots?.leftToBook.toString()
-                slotLabel.text = view.context.getString(R.string.slots_left)
-
-                if (activity.slots?.isBooked ?: false) { // We have booked the class
-                    updateColors(State.BOOKED)
-
+                if (activity.booking != null) { // We have booked the class
+                    when (activity.booking?.type) {
+                        "groupActivityBooking" -> { // Regular booking
+                            updateColors(State.BOOKED)
+                            slotNumber.text = activity.slots?.leftToBook.toString()
+                            slotLabel.text = view.context.getString(R.string.slots_left)
+                        }
+                        "waitingListBooking" -> { // We're in the waiting list
+                            updateColors(State.WAITING)
+                            slotNumber.text = activity.booking?.waitingListBooking?.waitingListPosition.toString()
+                            slotLabel.text = view.context.getString(R.string.people_before_you)
+                        }
+                    }
                     actionBtn.text = view.context.getString(R.string.cancel_my_booking)
-                } else if (activity.slots?.inWaitingList ?: -1 > 0) {
-                    updateColors(State.WAITING)
+                } else { // We haven't booked the class
 
-                    actionBtn.text = view.context.getString(R.string.join_the_waiting_list)
-                    slotNumber.text = activity.slots?.inWaitingList.toString()
-                    slotLabel.text = view.context.getString(R.string.in_queue)
-                } else {
-                    updateColors(State.TO_BOOK)
-                    actionBtn.text = view.context.getString(R.string.book_now)
+                    // If there is no more spot left
+                    if (activity.slots?.leftToBook ?: -1 == 0) {
+                        updateColors(State.WAITING)
+                        actionBtn.text = view.context.getString(R.string.join_the_waiting_list)
+                        slotNumber.text = activity.slots?.inWaitingList.toString()
+                        slotLabel.text = view.context.getString(R.string.in_queue)
+                    } else {
+                        updateColors(State.TO_BOOK)
+                        actionBtn.text = view.context.getString(R.string.book_now)
+                        slotNumber.text = activity.slots?.leftToBook.toString()
+                        slotLabel.text = view.context.getString(R.string.slots_left)
+                    }
                 }
 
-                actionBtn.show()
+                if (activity.slots?.leftToBook ?: -1 == 0 && !(activity.slots?.hasWaitingList ?: false)) {
+                    actionBtn.hideView()
+                } else {
+                    actionBtn.show()
+                }
                 slotsContainer.show()
                 canceled.hideView()
             }
@@ -113,15 +129,26 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
 
         @OnClick(R.id.action_btn)
         fun onActionClicked() {
-            val isBooked =  activity.slots?.isBooked ?: false
-            val bookingId = if (isBooked) activity.groupActivityProduct?.id ?: -1 else activity.id ?: -1
+            val isBooked =  activity.booking != null
+
+            val bookingId = if (isBooked) { // Id of the groupActivityBooking or waitingListBooking
+                when (activity.booking?.type) {
+                    "groupActivityBooking" -> activity.booking?.groupActivityBooking?.id ?: -1
+                    "waitingListBooking" -> activity.booking?.waitingListBooking?.id ?: -1
+                    else -> -1
+                }
+            } else {
+                activity.id ?: -1
+            }
+
+            val isWaitingList = activity.slots?.leftToBook ?: -1 == 0 && activity.slots?.hasWaitingList ?: false
             val message = if (!isBooked) {
                 String.format(view.context.getString(R.string.booking_confirmation_text), title.text, currentDate, startEnd.text, instructor.text)
             } else {
                 view.context.getString(R.string.cancel_booking_confirmation)
             }
 
-            actionCallback(bookingId, isBooked, message)
+            actionCallback(bookingId, isBooked, isWaitingList, message)
         }
 
         fun updateColors(colors: State) {

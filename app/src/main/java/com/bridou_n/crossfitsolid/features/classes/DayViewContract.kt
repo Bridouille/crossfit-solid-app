@@ -22,6 +22,6 @@ interface DayViewContract {
         fun stop()
 
         fun refresh()
-        fun bookClass(groupActivityId: Int, isBooked: Boolean)
+        fun bookClass(bookingId: Int, isBooked: Boolean, isWaitingList: Boolean)
     }
 }

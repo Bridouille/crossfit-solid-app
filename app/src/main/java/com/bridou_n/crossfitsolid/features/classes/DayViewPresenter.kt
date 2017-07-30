@@ -2,7 +2,6 @@ package com.bridou_n.crossfitsolid.features.classes
 
 import android.text.format.DateUtils
 import com.bridou_n.crossfitsolid.API.BookingService
-import com.bridou_n.crossfitsolid.models.BookingError
 import com.bridou_n.crossfitsolid.models.BookingRequest
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.models.GroupActivityBooking
@@ -11,7 +10,6 @@ import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.isToday
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,8 +17,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import org.joda.time.LocalDate
-import retrofit2.HttpException
-import java.io.IOException
 import java.util.*
 
 /**
@@ -56,9 +52,7 @@ class DayViewPresenter(val view: DayViewContract.View,
                         myActivities
                                 .filter { activityId == it.groupActivity?.id }
                                 .forEach {
-                                    ga.slots?.isBooked = true
-                                    // We store the id of the activityBooking in case we need to DELETE it
-                                    ga.groupActivityProduct?.id = it.groupActivityBooking?.id
+                                    ga.booking = it
                                 }
                     }
                     allActivites
@@ -89,11 +83,11 @@ class DayViewPresenter(val view: DayViewContract.View,
         disposables.clear()
     }
 
-    override fun bookClass(groupActivityId: Int, isBooked: Boolean) {
+    override fun bookClass(bookingId: Int, isBooked: Boolean, isWaitingList: Boolean) {
         val req = if (isBooked) {
-            api.cancelBooking(prefs.getUserId() ?: "", groupActivityId, id = GroupActivity(groupActivityId))
+            api.cancelBooking(prefs.getUserId() ?: "", bookingId, if (isWaitingList) "waitingListBooking" else "groupActivityBooking", GroupActivity(bookingId))
         } else {
-            api.bookActivity(prefs.getUserId() ?: "", BookingRequest(groupActivityId))
+            api.bookActivity(prefs.getUserId() ?: "", BookingRequest(bookingId, isWaitingList))
         }
 
         disposables.add(req
