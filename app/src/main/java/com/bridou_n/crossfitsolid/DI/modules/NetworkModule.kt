@@ -47,7 +47,7 @@ import javax.inject.Singleton
 
             // Logging what's happenning
             val t1 = System.nanoTime()
-            Log.d("OKHTTP3", "${req.method()} ==> ${req.url()} on ${chain.connection()}\nHeaders: ${req.headers()}Body: ${req.body()}")
+            Log.d("OKHTTP3", "${req.method()} ==> ${req.url()} on ${chain.connection()}\nHeaders: ${req.headers()}Body: ${req.body().toString()}")
 
             val response = chain.proceed(req)
 

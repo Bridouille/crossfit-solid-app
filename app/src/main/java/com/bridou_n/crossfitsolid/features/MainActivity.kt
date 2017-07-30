@@ -30,11 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
         component().inject(this)
-
-        if (!prefs.isLogged()) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
+        redirectToLoginIfNotLogged()
 
         bottomNav.setOnNavigationItemSelectedListener { item ->
             var frag: Fragment? = null
@@ -57,5 +53,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
         bottomNav.selectedItemId = R.id.action_classes
+    }
+
+    fun redirectToLoginIfNotLogged() {
+        if (!prefs.isLogged()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 }

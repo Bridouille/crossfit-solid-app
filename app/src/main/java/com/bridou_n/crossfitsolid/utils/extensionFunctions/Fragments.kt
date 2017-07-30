@@ -12,7 +12,7 @@ import com.bridou_n.crossfitsolid.R
 
 fun Fragment.component() = AppSingleton.component
 
-fun Fragment.showSnackbar(view: View, str: String, length: Int = Snackbar.LENGTH_LONG, actionClicked: () -> Unit = { }) : Snackbar {
+fun Fragment.snackBar(view: View, str: String, length: Int = Snackbar.LENGTH_LONG, actionClicked: () -> Unit = { }) : Snackbar {
     return when (length) {
         Snackbar.LENGTH_INDEFINITE -> {
             Snackbar.make(view, str, length)

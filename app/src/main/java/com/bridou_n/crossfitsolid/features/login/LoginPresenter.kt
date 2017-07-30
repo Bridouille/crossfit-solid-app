@@ -46,6 +46,9 @@ class LoginPresenter(val view: LoginContract.View,
                     prefs.setUsername(username)
                     prefs.setPassword(password)
 
+                    prefs.setToken(resp.access_token)
+                    prefs.setUserId(resp.username)
+
                     // Redirect to the logged part
                     view.navigateToMain()
                 }, { err ->

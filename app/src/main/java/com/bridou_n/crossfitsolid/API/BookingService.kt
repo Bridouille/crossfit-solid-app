@@ -1,9 +1,7 @@
 package com.bridou_n.crossfitsolid.API
 
-import com.bridou_n.crossfitsolid.models.BookingRequest
-import com.bridou_n.crossfitsolid.models.GroupActivity
-import com.bridou_n.crossfitsolid.models.GroupActivityBooking
-import com.bridou_n.crossfitsolid.models.Profile
+import com.bridou_n.crossfitsolid.models.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
@@ -24,7 +22,13 @@ interface BookingService {
     @GET("customers/{customerId}/bookings/groupactivities")
     fun getMyGroupActivities(@Path("customerId") customerId: String) : Single<Array<GroupActivityBooking>>
 
-    @POST("customers/{customerId}/bookings/groupactivites")
+    @POST("customers/{customerId}/bookings/groupactivities")
     fun bookActivity(@Path("customerId") customerId: String,
-                     @Body activity: BookingRequest)
+                     @Body activity: BookingRequest) : Completable
+
+    @HTTP(method = "DELETE", path = "customers/{customerId}/bookings/groupactivities/{activityId}", hasBody = true)
+    fun cancelBooking(@Path("customerId") customerId: String,
+                      @Path("activityId") activityId: Int,
+                      @Query("bookingType") bookingType: String = "groupActivityBooking",
+                      @Body id: GroupActivity) : Completable
 }

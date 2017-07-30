@@ -20,6 +20,7 @@ import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.*
+import com.google.gson.Gson
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
 import org.joda.time.LocalDate
@@ -62,6 +63,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
 
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
+    @Inject lateinit var gson: Gson
 
     var position: Int? = null
     lateinit var currentDate: LocalDate
@@ -75,7 +77,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
 
         position = arguments.getInt(POS_KEY)
         currentDate = LocalDate.now().plusDays(position ?: 0)
-        presenter = DayViewPresenter(this, bookingService, prefs, currentDate)
+        presenter = DayViewPresenter(this, bookingService, gson, prefs, currentDate)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -87,7 +89,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(context)
         adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate(), {
-            activityId, isBooking -> presenter.bookClass(activityId, isBooking)
+            activityId, isBooked -> presenter.bookClass(activityId, isBooked)
         })
         rv.adapter = adapter
 
@@ -130,6 +132,10 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         errorText.text = err ?: context.getString(R.string.an_error_occured)
 
         return RxView.clicks(retryBtn).map { _ -> 1 }
+    }
+
+    override fun showSmallError(err: String?) {
+        snackBar(dayViewContainer, err ?: getString(R.string.an_error_occured)).show()
     }
 
     override fun onPause() {

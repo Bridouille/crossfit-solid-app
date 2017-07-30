@@ -14,6 +14,7 @@ interface DayViewContract {
         fun showLoading(show: Boolean)
         fun showEmptyView()
         fun showError(err: String?) : Observable<Int>
+        fun showSmallError(err: String?)
     }
 
     interface Presenter {
@@ -21,6 +22,6 @@ interface DayViewContract {
         fun stop()
 
         fun refresh()
-        fun bookClass(groupActivityId: Int, isBooking: Boolean)
+        fun bookClass(groupActivityId: Int, isBooked: Boolean)
     }
 }

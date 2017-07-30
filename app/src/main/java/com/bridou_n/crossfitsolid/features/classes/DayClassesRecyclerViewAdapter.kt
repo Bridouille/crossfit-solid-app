@@ -112,7 +112,10 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
 
         @OnClick(R.id.action_btn)
         fun onActionclicked() {
-            actionCallback(activity.id ?: -1, actionBtn.text != view.context.getString(R.string.cancel_my_booking))
+            val isBooked =  activity.slots?.isBooked ?: false
+            val bookingId = if (isBooked) activity.groupActivityProduct?.id ?: -1 else activity.id ?: -1
+
+            actionCallback(bookingId, isBooked)
         }
 
         fun updateColors(colors: State) {

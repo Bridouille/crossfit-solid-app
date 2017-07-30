@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * Created by bridou_n on 27/07/2017.
  */
 
-data class GroupActivityProduct(@SerializedName("id") val id: Int?,
+data class GroupActivityProduct(@SerializedName("id") var id: Int?,
                                 @SerializedName("name") val name: String?) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<GroupActivityProduct> = object : Parcelable.Creator<GroupActivityProduct> {
