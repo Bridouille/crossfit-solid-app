@@ -5,6 +5,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -49,6 +50,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
     }
 
     @BindView(R.id.day_view_container) lateinit var dayViewContainer: CoordinatorLayout
+    @BindView(R.id.refresh) lateinit var refreshLayout: SwipeRefreshLayout
     @BindView(R.id.date_header_container) lateinit var dateHeaderContainer: ConstraintLayout
     @BindView(R.id.date_header) lateinit  var dateHeaderTv: TextView
     @BindView(R.id.rv) lateinit var rv: RecyclerView
@@ -84,6 +86,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         val v = inflater.inflate(R.layout.fragment_day_view, container, false)
         ButterKnife.bind(this, v)
 
+        refreshLayout.setOnRefreshListener { presenter.refresh() }
         dateHeaderTv.text = currentDate.toDate().getFullDate()
 
         rv.setHasFixedSize(true)
@@ -102,6 +105,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
     }
 
     fun hideAll() {
+        refreshLayout.isRefreshing = false
         loadingContainer.hideView()
         emptyContainer.hideView()
         errorContainer.hideView()
