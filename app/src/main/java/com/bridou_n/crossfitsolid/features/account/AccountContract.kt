@@ -9,6 +9,7 @@ import com.bridou_n.crossfitsolid.models.Profile
 interface AccountContract {
     interface View {
         fun showProfile(profile: Profile)
+        fun showError(err: String?)
 
         fun logoutRedirect()
     }
@@ -17,6 +18,7 @@ interface AccountContract {
         fun start()
         fun stop()
 
+        fun refresh()
         fun logout()
     }
 }

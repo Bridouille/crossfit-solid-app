@@ -2,6 +2,7 @@ package com.bridou_n.crossfitsolid.features
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
+
+    private val POSITION_KEY = "position"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +55,12 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        bottomNav.selectedItemId = R.id.action_classes
+        bottomNav.selectedItemId = savedInstanceState?.getInt(POSITION_KEY) ?: R.id.action_classes
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putInt(POSITION_KEY, bottomNav.selectedItemId)
+        super.onSaveInstanceState(outState)
     }
 
     fun redirectToLoginIfNotLogged() {

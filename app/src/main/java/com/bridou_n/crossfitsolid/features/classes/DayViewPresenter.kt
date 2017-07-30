@@ -6,6 +6,7 @@ import com.bridou_n.crossfitsolid.models.BookingError
 import com.bridou_n.crossfitsolid.models.BookingRequest
 import com.bridou_n.crossfitsolid.models.GroupActivity
 import com.bridou_n.crossfitsolid.models.GroupActivityBooking
+import com.bridou_n.crossfitsolid.utils.BasePresenter
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.isToday
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.toIso8601Format
@@ -30,7 +31,7 @@ class DayViewPresenter(val view: DayViewContract.View,
                        val api: BookingService,
                        val gson: Gson,
                        val prefs: PreferencesManager,
-                       val currentDate: LocalDate) : DayViewContract.Presenter {
+                       val currentDate: LocalDate) : DayViewContract.Presenter, BasePresenter() {
 
     var disposables: CompositeDisposable = CompositeDisposable()
 
@@ -68,7 +69,7 @@ class DayViewPresenter(val view: DayViewContract.View,
                     errors.flatMap {
                         error: Throwable ->
 
-                        view.showError(getErrorMessage(error))
+                        view.showError(getErrorMessage(error, gson))
                             .toFlowable(BackpressureStrategy.LATEST)
                             .doOnNext { _ -> view.showLoading(true) }
                     }
@@ -103,30 +104,8 @@ class DayViewPresenter(val view: DayViewContract.View,
                 }, { err ->
                     err.printStackTrace()
 
-                    view.showSmallError(getErrorMessage(err))
+                    view.showSmallError(getErrorMessage(err, gson))
                 }))
 
-    }
-
-    fun getErrorMessage(err: Throwable) : String? {
-        return when (err) {
-            is HttpException -> {
-                val body = err.response().errorBody()
-
-                try {
-                    val error = gson.fromJson(body?.string(), BookingError::class.java)
-
-                    error?.errorCode ?: err.message()
-                } catch (e: JsonSyntaxException) {
-                    err.message
-                }
-            }
-            is IOException -> {
-                null
-            }
-            else -> {
-                err.message
-            }
-        }
     }
 }

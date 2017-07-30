@@ -1,204 +1,214 @@
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.bridou_n.crossfitsolid.features.account.AccountFragment">
-
-    <View
-        android:id="@+id/colored_header"
+    android:layout_height="match_parent">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/colorPrimary"
-        />
-
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="148dp"
-        android:layout_height="148dp"
-        android:layout_below="@+id/colored_header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-74dp"
-        app:srcCompat="@drawable/ic_account_circle_black_24dp"
-        />
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_image"
-        android:layout_marginTop="32dp"
-        >
-
-        <!-- Name -->
-        <ImageView
-            android:id="@+id/name_logo"
-            android:layout_width="32dp"
-            android:layout_height="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="32dp"
-            android:tint="@color/colorSecondaryText"
-            app:srcCompat="@drawable/ic_perm_identity_black_24dp"
-            />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/name_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/name_logo"
-            app:layout_constraintBottom_toBottomOf="@+id/name_logo"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryText"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="@string/loading"
-            tools:text="Nicolas Jean Bridoux"
-            />
+            tools:context="com.bridou_n.crossfitsolid.features.account.AccountFragment">
 
-        <!-- Email -->
-        <ImageView
-            android:id="@+id/email_logo"
-            android:layout_width="32dp"
-            android:layout_height="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_logo"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            android:tint="@color/colorSecondaryText"
-            app:srcCompat="@drawable/ic_email_black_24dp"
-            />
+            <View
+                android:id="@+id/colored_header"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/colorPrimary"
+                />
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/email_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/email_logo"
-            app:layout_constraintBottom_toBottomOf="@+id/email_logo"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryText"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="@string/loading"
-            tools:text="nicobr65@gmail.com"
-            />
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="148dp"
+                android:layout_height="148dp"
+                android:layout_below="@+id/colored_header"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-74dp"
+                app:srcCompat="@drawable/ic_account_circle_black_24dp"
+                />
 
-        <!-- CardNumber -->
-        <ImageView
-            android:id="@+id/cardnumber_logo"
-            android:layout_width="32dp"
-            android:layout_height="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_logo"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:tint="@color/colorSecondaryText"
-            app:srcCompat="@drawable/ic_credit_card_black_24dp"
-            />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="?attr/actionBarSize"
+                >
 
-        <TextView
-            android:id="@+id/cardnumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/cardnumber_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cardnumber_logo"
-            app:layout_constraintBottom_toBottomOf="@+id/cardnumber_logo"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryText"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="@string/loading"
-            tools:text="726078345"
-            />
+                <!-- Name -->
+                <ImageView
+                    android:id="@+id/name_logo"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginStart="32dp"
+                    android:tint="@color/colorSecondaryText"
+                    app:srcCompat="@drawable/ic_perm_identity_black_24dp"
+                    />
 
-        <!-- CustomerNumber -->
-        <ImageView
-            android:id="@+id/customernumber_logo"
-            android:layout_width="32dp"
-            android:layout_height="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardnumber_logo"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:tint="@color/colorSecondaryText"
-            app:srcCompat="@drawable/ic_contacts_black_24dp"
-            />
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/name_logo"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/name_logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/name_logo"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/loading"
+                    tools:text="Nicolas Jean Bridoux"
+                    />
 
-        <TextView
-            android:id="@+id/customernumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/customernumber_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/customernumber_logo"
-            app:layout_constraintBottom_toBottomOf="@+id/customernumber_logo"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryText"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="@string/loading"
-            tools:text="11481"
-            />
+                <!-- Email -->
+                <ImageView
+                    android:id="@+id/email_logo"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_logo"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="32dp"
+                    android:tint="@color/colorSecondaryText"
+                    app:srcCompat="@drawable/ic_email_black_24dp"
+                    />
 
-        <!-- Phone number -->
-        <ImageView
-            android:id="@+id/phonenumber_logo"
-            android:layout_width="32dp"
-            android:layout_height="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customernumber_logo"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:tint="@color/colorSecondaryText"
-            app:srcCompat="@drawable/ic_call_black_24dp"
-            />
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/email_logo"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/email_logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/email_logo"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/loading"
+                    tools:text="nicobr65@gmail.com"
+                    />
 
-        <TextView
-            android:id="@+id/phonenumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/phonenumber_logo"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/phonenumber_logo"
-            app:layout_constraintBottom_toBottomOf="@+id/phonenumber_logo"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryText"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="@string/loading"
-            tools:text="+46 7 89 64 12"
-            />
+                <!-- CardNumber -->
+                <ImageView
+                    android:id="@+id/cardnumber_logo"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/email_logo"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:tint="@color/colorSecondaryText"
+                    app:srcCompat="@drawable/ic_credit_card_black_24dp"
+                    />
 
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Button.Colored"
-            app:layout_constraintTop_toBottomOf="@+id/phonenumber_logo"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="32dp"
-            android:text="@string/logout"
-            />
-    </android.support.constraint.ConstraintLayout>
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/cardnumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/cardnumber_logo"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cardnumber_logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardnumber_logo"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/loading"
+                    tools:text="726078345"
+                    />
+
+                <!-- CustomerNumber -->
+                <ImageView
+                    android:id="@+id/customernumber_logo"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardnumber_logo"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:tint="@color/colorSecondaryText"
+                    app:srcCompat="@drawable/ic_contacts_black_24dp"
+                    />
+
+                <TextView
+                    android:id="@+id/customernumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/customernumber_logo"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/customernumber_logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/customernumber_logo"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/loading"
+                    tools:text="11481"
+                    />
+
+                <!-- Phone number -->
+                <ImageView
+                    android:id="@+id/phonenumber_logo"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/customernumber_logo"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:tint="@color/colorSecondaryText"
+                    app:srcCompat="@drawable/ic_call_black_24dp"
+                    />
+
+                <TextView
+                    android:id="@+id/phonenumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/phonenumber_logo"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/phonenumber_logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/phonenumber_logo"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/loading"
+                    tools:text="+46 7 89 64 12"
+                    />
+
+                <Button
+                    android:id="@+id/logout_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    app:layout_constraintTop_toBottomOf="@+id/phonenumber_logo"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/logout"
+                    />
+            </android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>
