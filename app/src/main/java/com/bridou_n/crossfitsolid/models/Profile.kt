@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName
 data class Profile(@SerializedName("id") val id: Int?,
                    @SerializedName("firstName") val firstName: String?,
                    @SerializedName("lastName") val lastName: String?,
+                   @SerializedName("email") val email: String?,
                    @SerializedName("sex") val sex: String?,
                    @SerializedName("ssn") val ssn: String?,
                    @SerializedName("birthDate") val birthDate: String?,
@@ -39,6 +40,7 @@ data class Profile(@SerializedName("id") val id: Int?,
     source.readString(),
     source.readString(),
     source.readString(),
+    source.readString(),
     source.readParcelable<Address>(Address::class.java.classLoader),
     source.readParcelable<Address>(Address::class.java.classLoader),
     source.readString(),
@@ -58,6 +60,7 @@ data class Profile(@SerializedName("id") val id: Int?,
         dest.writeValue(id)
         dest.writeString(firstName)
         dest.writeString(lastName)
+        dest.writeString(email)
         dest.writeString(sex)
         dest.writeString(ssn)
         dest.writeString(birthDate)

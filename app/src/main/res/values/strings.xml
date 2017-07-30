@@ -27,4 +27,9 @@
     <string name="booking_confirmation_text">Are you sure you want to book: %1$s on %2$s at %3$s with %4$s?</string>
     <string name="cancel_booking_confirmation">Are you sure you want to cancel this booking?</string>
     <string name="confirm">Confirm</string>
+    <string name="logout">Logout</string>
+    <string name="cardnumber">Card #</string>
+    <string name="not_provided">Not provided</string>
+    <string name="customernumber">Customer #</string>
+    <string name="loading">loading...</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.bridou_n.crossfitsolid.features.classes
 
 import android.text.format.DateUtils
-import android.util.Log
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.models.BookingError
 import com.bridou_n.crossfitsolid.models.BookingRequest
