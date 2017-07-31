@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -17,12 +16,12 @@ import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.models.Profile
-import com.bridou_n.crossfitsolid.utils.CircleTransform
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.snackBar
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
 /**
@@ -33,7 +32,7 @@ class AccountFragment : Fragment(), AccountContract.View {
 
     @BindView(R.id.container) lateinit var container: CoordinatorLayout
 
-    @BindView(R.id.profile_image) lateinit var profileImage: ImageView
+    @BindView(R.id.profile_image) lateinit var profileImage: CircleImageView
     @BindView(R.id.name) lateinit var name: TextView
     @BindView(R.id.email) lateinit var email: TextView
     @BindView(R.id.cardnumber) lateinit var cardnumber: TextView
@@ -65,7 +64,8 @@ class AccountFragment : Fragment(), AccountContract.View {
 
         Picasso.with(context)
                 .load(profileUrl)
-                .transform(CircleTransform())
+                .placeholder(R.drawable.image_placeholder)
+                .noFade()
                 .into(profileImage)
 
         name.text = "${profile.firstName} ${profile.lastName}"

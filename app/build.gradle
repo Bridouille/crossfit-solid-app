@@ -82,4 +82,7 @@ dependencies {
 
     // Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // CircleImageView
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

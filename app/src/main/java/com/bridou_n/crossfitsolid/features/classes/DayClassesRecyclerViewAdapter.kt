@@ -80,6 +80,10 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
             startEnd.text = "${activity.duration?.start?.getHourMinute()} ${view.context.getString(R.string.till)} ${activity.duration?.end?.getHourMinute()}"
             instructor.text = activity.instructors?.get(0)?.name ?: view.context.getString(R.string.open_gym)
 
+            if (instructor.text == "Joanna") {
+                instructor.text = "${instructor.text} \uD83D\uDCAA"
+            }
+
             if (activity.cancelled ?: false) { // The class has been canceled
                 updateColors(State.CANCELED)
 
