@@ -1,8 +1,11 @@
 package com.bridou_n.crossfitsolid.utils.extensionFunctions
 
+import android.os.Build
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.WindowManager
 import com.bridou_n.crossfitsolid.AppSingleton
 import com.bridou_n.crossfitsolid.R
 
@@ -23,5 +26,19 @@ fun Fragment.snackBar(view: View, str: String, length: Int = Snackbar.LENGTH_LON
         else -> {
             Snackbar.make(view, str, length)
         }
+    }
+}
+
+fun Fragment.setStatusBarColor(color: Int) {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+        // finally change the color
+        activity.window.statusBarColor = ContextCompat.getColor(activity, color)
     }
 }

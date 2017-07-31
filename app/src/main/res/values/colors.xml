@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
-    <color name="colorAccent">#607D8B</color>
+    <color name="colorPrimary">#0288D1</color>
+    <color name="colorPrimaryDark">#01579B</color>
+    <color name="colorPrimaryLight">#81D4FA</color>
+    <color name="colorAccent">#F44336</color>
 
-    <color name="colorPrimaryLight">#FFCDD2</color>
     <color name="divider">#BDBDBD</color>
-
     <color name="colorSecondaryText">#757575</color>
     <color name="colorPrimaryText">#212121</color>
 
-    <color name="bookableClassBackground">#1976D2</color>
-    <color name="bookableClassSubtitle">#BBDEFB</color>
+    <color name="bookableClassBackground">#0288D1</color>
+    <color name="bookableClassSubtitle">#B3E5FC</color>
 
-    <color name="bookedClassBackground">#4CAF50</color>
-    <color name="bookedClassSubtitle">#C8E6C9</color>
+    <color name="bookedClassBackground">#689F38</color>
+    <color name="bookedClassSubtitle">#DCEDC8</color>
 
-    <color name="waitingClassBackground">#FFC107</color>
-    <color name="waitingClassSubtitle">#FFECB3</color>
+    <color name="waitingClassBackground">#F57C00</color>
+    <color name="waitingClassSubtitle">#FFE0B2</color>
 
-    <color name="canceledClassBackground">#F44336</color>
+    <color name="canceledClassBackground">#D32F2F</color>
     <color name="canceledClassSubtitle">#FFCDD2</color>
 </resources>

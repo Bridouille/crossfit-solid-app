@@ -18,6 +18,7 @@ import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.models.Profile
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.setStatusBarColor
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.snackBar
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
@@ -48,7 +49,7 @@ class AccountFragment : Fragment(), AccountContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component().inject(this)
-
+        setStatusBarColor(R.color.colorPrimaryDark)
         presenter = AccountPresenter(this, bookingService, prefs, gson)
     }
 
