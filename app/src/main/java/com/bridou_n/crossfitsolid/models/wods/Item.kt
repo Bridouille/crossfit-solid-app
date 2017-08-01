@@ -1,5 +1,7 @@
 package com.bridou_n.crossfitsolid.models.wods
 
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
@@ -9,11 +11,12 @@ import org.simpleframework.xml.Root
  */
 
 @Root(name = "item", strict = false)
-class Item {
+open class Item : RealmObject() {
     @set:Element(name = "title")
     @get:Element(name = "title")
     var title: String? = null
 
+    @PrimaryKey
     @set:Element(name = "link")
     @get:Element(name = "link")
     var link: String? = null

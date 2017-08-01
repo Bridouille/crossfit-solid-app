@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
@@ -59,11 +60,13 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.2'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
-    // Retrofit + RxJava2CallAdapter
+    // Retrofit + RxJava2CallAdapter + Converters factories
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile ('com.squareup.retrofit2:converter-simplexml:2.3.0') {
-        exclude module: 'stax-api'
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
     }
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
@@ -88,4 +91,7 @@ dependencies {
 
     // CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    // Realm Adapters
+    compile 'io.realm:android-adapters:2.1.0'
 }

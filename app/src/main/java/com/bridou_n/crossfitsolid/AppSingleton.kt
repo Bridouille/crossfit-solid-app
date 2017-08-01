@@ -6,6 +6,7 @@ import com.bridou_n.crossfitsolid.DI.components.DaggerAppComponent
 import com.bridou_n.crossfitsolid.DI.modules.AppModule
 import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
 import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
+import io.realm.Realm
 import net.danlew.android.joda.JodaTimeAndroid
 
 /**
@@ -26,6 +27,7 @@ class AppSingleton : Application() {
                 .networkModule(NetworkModule())
                 .build()
 
+        Realm.init(this)
         JodaTimeAndroid.init(this)
     }
 }
