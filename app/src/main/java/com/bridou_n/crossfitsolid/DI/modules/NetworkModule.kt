@@ -3,7 +3,8 @@ package com.bridou_n.crossfitsolid.DI.modules
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.API.LoginService
-import com.bridou_n.crossfitsolid.models.LoginRequest
+import com.bridou_n.crossfitsolid.API.WodsService
+import com.bridou_n.crossfitsolid.models.classes.LoginRequest
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.google.gson.Gson
@@ -14,6 +15,7 @@ import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -23,7 +25,8 @@ import javax.inject.Singleton
 
 @Module class NetworkModule {
 
-    val BASE_URL = "https://ssl1.brpsystems.se/crossfitsolidgog/api/ver3/"
+    val BOOKING_BASE_URL = "https://ssl1.brpsystems.se/crossfitsolidgog/api/ver3/"
+    val WOD_BASE_URL = "http://www.crossfitsolid.se/"
     val AUTHORIZATION = "Authorization"
 
     @Provides @Singleton @Named("injectToken")
@@ -109,9 +112,19 @@ import javax.inject.Singleton
     @Provides @Singleton @Named("login")
     fun provideLoginRetrofit(@Named("login") httpClient: OkHttpClient, gson: Gson) : Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BOOKING_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient)
+                .build()
+    }
+
+    @Provides @Singleton @Named("wods")
+    fun provideWodsRetrofit(httpClient: OkHttpClient) : Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(WOD_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(SimpleXmlConverterFactory.create())
                 .client(httpClient)
                 .build()
     }
@@ -119,7 +132,7 @@ import javax.inject.Singleton
     @Provides @Singleton
     fun provideRetrofit(httpClient: OkHttpClient, gson: Gson) : Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BOOKING_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(httpClient)
@@ -131,4 +144,7 @@ import javax.inject.Singleton
 
     @Provides @Singleton
     fun provideBookingService(retrofit: Retrofit) = retrofit.create(BookingService::class.java)
+
+    @Provides @Singleton
+    fun provideWodsService(@Named("wods") retrofit: Retrofit) = retrofit.create(WodsService::class.java)
 }

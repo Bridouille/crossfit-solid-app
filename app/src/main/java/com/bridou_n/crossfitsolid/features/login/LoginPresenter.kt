@@ -2,7 +2,7 @@ package com.bridou_n.crossfitsolid.features.login
 
 import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.R
-import com.bridou_n.crossfitsolid.models.LoginRequest
+import com.bridou_n.crossfitsolid.models.classes.LoginRequest
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

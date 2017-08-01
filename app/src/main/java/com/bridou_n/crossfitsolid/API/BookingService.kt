@@ -1,6 +1,9 @@
 package com.bridou_n.crossfitsolid.API
 
-import com.bridou_n.crossfitsolid.models.*
+import com.bridou_n.crossfitsolid.models.account.Profile
+import com.bridou_n.crossfitsolid.models.classes.BookingRequest
+import com.bridou_n.crossfitsolid.models.classes.GroupActivity
+import com.bridou_n.crossfitsolid.models.classes.GroupActivityBooking
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*

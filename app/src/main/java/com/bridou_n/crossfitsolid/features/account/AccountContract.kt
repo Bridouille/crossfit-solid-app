@@ -1,6 +1,6 @@
 package com.bridou_n.crossfitsolid.features.account
 
-import com.bridou_n.crossfitsolid.models.Profile
+import com.bridou_n.crossfitsolid.models.account.Profile
 
 /**
  * Created by bridou_n on 30/07/2017.

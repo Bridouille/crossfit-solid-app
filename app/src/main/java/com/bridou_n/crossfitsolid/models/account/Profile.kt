@@ -1,7 +1,10 @@
-package com.bridou_n.crossfitsolid.models
+package com.bridou_n.crossfitsolid.models.account
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.bridou_n.crossfitsolid.models.classes.Address
+import com.bridou_n.crossfitsolid.models.classes.Business
+import com.bridou_n.crossfitsolid.models.classes.CustomerType
 import com.google.gson.annotations.SerializedName
 
 /**

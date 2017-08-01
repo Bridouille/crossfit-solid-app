@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        bottomNav.selectedItemId = savedInstanceState?.getInt(POSITION_KEY) ?: R.id.action_classes
+        bottomNav.selectedItemId = savedInstanceState?.getInt(POSITION_KEY) ?: R.id.action_wod
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

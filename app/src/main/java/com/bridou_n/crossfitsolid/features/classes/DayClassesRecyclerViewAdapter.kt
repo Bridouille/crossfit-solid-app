@@ -14,7 +14,7 @@ import butterknife.BindViews
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bridou_n.crossfitsolid.R
-import com.bridou_n.crossfitsolid.models.GroupActivity
+import com.bridou_n.crossfitsolid.models.classes.GroupActivity
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.getHourMinute
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.hideView
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.show

@@ -18,7 +18,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
-import com.bridou_n.crossfitsolid.models.GroupActivity
+import com.bridou_n.crossfitsolid.models.classes.GroupActivity
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.*
 import com.google.gson.Gson

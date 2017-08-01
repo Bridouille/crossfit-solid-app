@@ -2,9 +2,9 @@ package com.bridou_n.crossfitsolid.features.classes
 
 import android.text.format.DateUtils
 import com.bridou_n.crossfitsolid.API.BookingService
-import com.bridou_n.crossfitsolid.models.BookingRequest
-import com.bridou_n.crossfitsolid.models.GroupActivity
-import com.bridou_n.crossfitsolid.models.GroupActivityBooking
+import com.bridou_n.crossfitsolid.models.classes.BookingRequest
+import com.bridou_n.crossfitsolid.models.classes.GroupActivity
+import com.bridou_n.crossfitsolid.models.classes.GroupActivityBooking
 import com.bridou_n.crossfitsolid.utils.BasePresenter
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.isToday

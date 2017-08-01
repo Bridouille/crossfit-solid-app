@@ -15,7 +15,7 @@ import butterknife.OnClick
 import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
-import com.bridou_n.crossfitsolid.models.Profile
+import com.bridou_n.crossfitsolid.models.account.Profile
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.setStatusBarColor

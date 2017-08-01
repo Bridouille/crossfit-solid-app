@@ -1,4 +1,4 @@
-package com.bridou_n.crossfitsolid.models
+package com.bridou_n.crossfitsolid.models.classes
 
 import com.google.gson.annotations.SerializedName
 

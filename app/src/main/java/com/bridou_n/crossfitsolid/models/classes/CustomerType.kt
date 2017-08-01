@@ -1,4 +1,4 @@
-package com.bridou_n.crossfitsolid.models
+package com.bridou_n.crossfitsolid.models.classes
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -8,12 +8,12 @@ import com.google.gson.annotations.SerializedName
  * Created by bridou_n on 27/07/2017.
  */
 
-data class Location(@SerializedName("id") val id: Int?,
-                    @SerializedName("name") val name: String?) : Parcelable {
+data class CustomerType(@SerializedName("id") val id: Int?,
+                        @SerializedName("name") val name: String?) : Parcelable {
     companion object {
-        @JvmField val CREATOR: Parcelable.Creator<Location> = object : Parcelable.Creator<Location> {
-            override fun createFromParcel(source: Parcel): Location = Location(source)
-            override fun newArray(size: Int): Array<Location?> = arrayOfNulls(size)
+        @JvmField val CREATOR: Parcelable.Creator<CustomerType> = object : Parcelable.Creator<CustomerType> {
+            override fun createFromParcel(source: Parcel): CustomerType = CustomerType(source)
+            override fun newArray(size: Int): Array<CustomerType?> = arrayOfNulls(size)
         }
     }
 

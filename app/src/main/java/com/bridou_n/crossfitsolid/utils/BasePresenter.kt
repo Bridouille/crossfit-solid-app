@@ -1,6 +1,6 @@
 package com.bridou_n.crossfitsolid.utils
 
-import com.bridou_n.crossfitsolid.models.BookingError
+import com.bridou_n.crossfitsolid.models.classes.BookingError
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException

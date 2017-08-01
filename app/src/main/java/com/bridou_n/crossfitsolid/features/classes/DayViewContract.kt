@@ -1,6 +1,6 @@
 package com.bridou_n.crossfitsolid.features.classes
 
-import com.bridou_n.crossfitsolid.models.GroupActivity
+import com.bridou_n.crossfitsolid.models.classes.GroupActivity
 import io.reactivex.Observable
 
 /**
