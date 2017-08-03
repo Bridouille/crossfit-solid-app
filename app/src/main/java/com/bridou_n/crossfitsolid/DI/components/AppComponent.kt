@@ -11,6 +11,7 @@ import com.bridou_n.crossfitsolid.features.classes.DayViewFragment
 import com.bridou_n.crossfitsolid.features.classes.DayViewPresenter
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.features.wods.WodsFragment
+import com.google.gson.Gson
 import dagger.Component
 import javax.inject.Singleton
 
@@ -27,6 +28,7 @@ import javax.inject.Singleton
 )
 interface AppComponent {
     fun providesContext() : Context
+    fun providesGson() : Gson
 
     fun inject(act: LoginActivity)
     fun inject(act: MainActivity)

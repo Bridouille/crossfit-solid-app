@@ -2,12 +2,16 @@ package com.bridou_n.crossfitsolid.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.bridou_n.crossfitsolid.models.account.Profile
+import com.google.gson.Gson
+import io.reactivex.Maybe
+import io.reactivex.Single
 
 /**
  * Created by bridou_n on 25/07/2017.
  */
 
-class PreferencesManager(ctx: Context) {
+class PreferencesManager(ctx: Context, val gson: Gson) {
 
     val PREF_NAME: String = "sharedPref"
     val prefs: SharedPreferences = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -17,6 +21,7 @@ class PreferencesManager(ctx: Context) {
     var USERNAME_KEY = "pref_username"
     var PASSWORD_KEY = "pref_password"
     val USER_ID_KEY = "pref_user_id"
+    val PROFILE_KEY = "pref_profile"
 
     fun setUsername(username: String) {
         prefs.edit().putString(USERNAME_KEY, username).apply()
@@ -43,6 +48,18 @@ class PreferencesManager(ctx: Context) {
     fun getUserId() : String? = prefs.getString(USER_ID_KEY, null)
 
     fun isLogged() : Boolean = getToken() != null
+
+    fun setProfile(profile: Profile) {
+        val profileStr = gson.toJson(profile)
+
+        prefs.edit().putString(PROFILE_KEY, profileStr).apply()
+    }
+
+    fun getProfile() : Maybe<Profile> {
+        val profile = gson.fromJson(prefs.getString(PROFILE_KEY, null), Profile::class.java)
+
+        return if (profile == null) Maybe.empty() else Maybe.just(profile)
+    }
 
     fun clear() = prefs.edit().clear().apply()
 }
