@@ -10,8 +10,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.wods.Item
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.getFullDate
 import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
+import java.util.*
 
 /**
  * Created by bridou_n on 01/08/2017.
@@ -23,6 +25,7 @@ class WodsRecyclerViewAdapter(val data: RealmResults<Item>) : RealmRecyclerViewA
 
         @BindView(R.id.title) lateinit var title: TextView
         @BindView(R.id.creator) lateinit var creator: TextView
+        @BindView(R.id.pub_date) lateinit var pubDate: TextView
         @BindView(R.id.content) lateinit var content: TextView
 
         init {
@@ -32,11 +35,12 @@ class WodsRecyclerViewAdapter(val data: RealmResults<Item>) : RealmRecyclerViewA
         fun bindView(item: Item) {
             title.text = item.title
             creator.text = item.creator
+            pubDate.text = Date(item.pubDate ?: Date().time).getFullDate()
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                content.text = Html.fromHtml(item.description, Html.FROM_HTML_MODE_LEGACY)
+                content.text = Html.fromHtml(item.content, Html.FROM_HTML_MODE_LEGACY)
             } else {
-                content.text = Html.fromHtml(item.description)
+                content.text = Html.fromHtml(item.content)
             }
 
         }

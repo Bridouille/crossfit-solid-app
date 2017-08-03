@@ -7,6 +7,7 @@ import com.bridou_n.crossfitsolid.DI.modules.AppModule
 import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
 import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import net.danlew.android.joda.JodaTimeAndroid
 
 /**
@@ -28,6 +29,12 @@ class AppSingleton : Application() {
                 .build()
 
         Realm.init(this)
+
+        val realmConfig = RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build()
+
+        Realm.setDefaultConfiguration(realmConfig)
         JodaTimeAndroid.init(this)
     }
 }

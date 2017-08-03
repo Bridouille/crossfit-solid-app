@@ -17,6 +17,12 @@ class WodsPresenter(val view: WodsContract.View,
     var disposable: Disposable? = null
 
     override fun start() {
+
+        // TODO remove this
+        /*realm.executeTransaction {
+            tRealm -> tRealm.deleteAll()
+        }*/
+
         disposable = api.getWods()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -28,7 +34,7 @@ class WodsPresenter(val view: WodsContract.View,
                             for (i in 0..items.size - 1) {
                                 val item = items.get(i)
 
-                                Log.d("WodsFragment", "${item.title} - ${item.creator} - ${item.pubDate} - ${item.category} - ${item.description}")
+                                Log.d("WodsFragment", "${item.title} - ${item.creator} - ${item.pubDate} - ${item.category} \n- ${item.content}")
 
                                 tRealm.copyToRealmOrUpdate(items[i])
                             }

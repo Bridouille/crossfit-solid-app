@@ -2,36 +2,75 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:padding="16dp"
+    >
 
     <TextView
         android:id="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/creator"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Mondag"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        tools:text="Tisdag"
         />
 
     <TextView
         android:id="@+id/creator"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintRight_toLeftOf="@+id/divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryText"
         tools:text="Felix Luding"
+        />
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintRight_toLeftOf="@+id/pub_date"
+        android:layout_marginEnd="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryText"
+        android:text="•"
+        />
+
+    <TextView
+        android:id="@+id/pub_date"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryText"
+        tools:text="27 juil 2017"
         />
 
     <TextView
         android:id="@+id/content"
         app:layout_constraintTop_toBottomOf="@+id/creator"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="bla bla bla bla bla"
+        android:textSize="16sp"
+        android:textColor="@color/colorSecondaryText"
+        tools:text="some content that takes a lot of space bla bllbllb some content that takes a lot of space bla bllbllb some content that takes a lot of space bla bllbllb some content that takes a lot of space bla bllbllb some content that takes a lot of space bla bllbllb"
         />
 
 </android.support.constraint.ConstraintLayout>

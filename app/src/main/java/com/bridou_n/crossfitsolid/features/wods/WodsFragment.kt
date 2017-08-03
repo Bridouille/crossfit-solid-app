@@ -2,23 +2,21 @@ package com.bridou_n.crossfitsolid.features.wods
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.wods.Item
-import com.bridou_n.crossfitsolid.models.wods.Rss
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import io.realm.Sort
 import javax.inject.Inject
 
 /**
@@ -47,7 +45,8 @@ class WodsFragment : Fragment(), WodsContract.View {
 
         rv.layoutManager = LinearLayoutManager(context)
         rv.setHasFixedSize(true)
-        rv.adapter = WodsRecyclerViewAdapter(realm.where(Item::class.java).findAllSorted("pubDate"))
+        rv.addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        rv.adapter = WodsRecyclerViewAdapter(realm.where(Item::class.java).findAllSorted(arrayOf("pubDate"), arrayOf(Sort.DESCENDING)))
 
         return v
     }
