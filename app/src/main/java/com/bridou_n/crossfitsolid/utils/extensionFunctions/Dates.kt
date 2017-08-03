@@ -40,6 +40,12 @@ fun Date.getFullDate() : String {
     return df.format(this)
 }
 
+fun Date.getFullDateAndTime() : String {
+    val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault())
+
+    return df.format(this)
+}
+
 fun Date.getHourMinute() : String {
     val sdf = SimpleDateFormat("HH:mm", Locale.US)
 

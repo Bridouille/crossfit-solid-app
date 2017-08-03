@@ -22,6 +22,7 @@ class PreferencesManager(ctx: Context, val gson: Gson) {
     var PASSWORD_KEY = "pref_password"
     val USER_ID_KEY = "pref_user_id"
     val PROFILE_KEY = "pref_profile"
+    val LAST_UPDATE_KEY = "pref_last_update"
 
     fun setUsername(username: String) {
         prefs.edit().putString(USERNAME_KEY, username).apply()
@@ -60,6 +61,10 @@ class PreferencesManager(ctx: Context, val gson: Gson) {
 
         return if (profile == null) Maybe.empty() else Maybe.just(profile)
     }
+
+    fun setLastUpdateTime(lastUpdate: Long) = prefs.edit().putLong(LAST_UPDATE_KEY, lastUpdate).apply()
+
+    fun getLastUpdateTime() = prefs.getLong(LAST_UPDATE_KEY, -1)
 
     fun clear() = prefs.edit().clear().apply()
 }

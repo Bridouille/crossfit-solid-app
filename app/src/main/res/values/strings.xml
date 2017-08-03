@@ -30,4 +30,9 @@
     <string name="customernumber">Customer #</string>
     <string name="loading">loading…</string>
     <string name="people_before_you">People before you</string>
+    <string name="updating">Updating…</string>
+    <string name="last_update_x">Last update: %1$s</string>
+    <string name="never">Never</string>
+    <string name="the_wods_will_appear_here">Once loaded, the WODs will appear here…</string>
+    <string name="workout_of_the_day">Workout of the day  🏋️</string>
 </resources>
