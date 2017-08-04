@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CrossFit Solid</string>
+    <string name="account">Mon compte</string>
+    <string name="book_now">Reserver maintenant</string>
+    <string name="an_error_occurred">Oops. Une erreur est survenue. Vérifiez votre connexion internet et réessayez plus tard!</string>
+    <string name="booking_confirmation_text">Etes vous sur de vouloir reserver: %1$s pour %2$s a %3$s avec %4$s ?</string>
+    <string name="cancel_my_booking">annuler ma réservation</string>
+    <string name="canceled">Annulé</string>
+    <string name="cardnumber">Carte #</string>
+    <string name="cancel_booking_confirmation">Etes vous sur de vouloir annuler cette réservation ?</string>
+    <string name="checkout_the_wod_for_x">Découvrez le nouveau wod pour %1$s !</string>
+    <string name="classes">Classes</string>
+    <string name="confirm">Confirmer</string>
+    <string name="customernumber">Client #</string>
+
+    <string name="password">Mot de passe</string>
+    <string name="email">Email</string>
+    <string name="username_or_password_empty">Nom d\'utilisateur ou mot de passe vide</string>
+    <string name="wrong_username_or_password">Mauvais nom d\'utilisateur ou mot de passe</string>
+    <string name="wods">Wods</string>
+    <string name="today">aujourd\'hui</string>
+    <string name="tomorrow">demain</string>
+    <string name="till">jusqu\'a</string>
+    <string name="slots_left">Places restantes</string>
+    <string name="in_queue">En attente</string>
+    <string name="open_gym">Open gym</string>
+    <string name="join_the_waiting_list">Rejoindre la liste d\'attente</string>
+    <string name="no_classes_this_day">Il semblerait qu\'il n\'y ait pas de classes ce jour!</string>
+    <string name="loading_classes">Faites un 1\' AMRAP burpees pendant que ça charge..</string>
+    <string name="retry">Reesayer</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="not_provided">Non renseigné</string>
+    <string name="loading">chargement…</string>
+    <string name="people_before_you">Personnes avant vous</string>
+    <string name="updating">Mise à jour…</string>
+    <string name="last_update_x">Dernière mise à jour: %1$s</string>
+    <string name="never">Jamais</string>
+    <string name="the_wods_will_appear_here">Une fois chargé, les WODs apparaitrons ici…</string>
+    <string name="workout_of_the_day">Workout du jour</string>
+    <string name="todays_wod">Workout du jour</string>
+</resources>
