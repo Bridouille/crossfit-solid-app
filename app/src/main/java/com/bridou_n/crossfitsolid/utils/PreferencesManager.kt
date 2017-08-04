@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.bridou_n.crossfitsolid.models.account.Profile
 import com.google.gson.Gson
 import io.reactivex.Maybe
-import io.reactivex.Single
 
 /**
  * Created by bridou_n on 25/07/2017.
@@ -13,16 +12,17 @@ import io.reactivex.Single
 
 class PreferencesManager(ctx: Context, val gson: Gson) {
 
-    val PREF_NAME: String = "sharedPref"
-    val prefs: SharedPreferences = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private val PREF_NAME: String = "sharedPref"
+    private val prefs: SharedPreferences = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     // Various keys
-    val ACCESS_TOKEN_KEY = "pref_access_token"
-    var USERNAME_KEY = "pref_username"
-    var PASSWORD_KEY = "pref_password"
-    val USER_ID_KEY = "pref_user_id"
-    val PROFILE_KEY = "pref_profile"
-    val LAST_UPDATE_KEY = "pref_last_update"
+    private val ACCESS_TOKEN_KEY = "pref_access_token"
+    private var USERNAME_KEY = "pref_username"
+    private var PASSWORD_KEY = "pref_password"
+    private val USER_ID_KEY = "pref_user_id"
+    private val PROFILE_KEY = "pref_profile"
+    private val LAST_UPDATE_KEY = "pref_last_update"
+    private val LAST_INSERTED_WOD_KEY = "pref_last_inserted_wod"
 
     fun setUsername(username: String) {
         prefs.edit().putString(USERNAME_KEY, username).apply()
@@ -65,6 +65,16 @@ class PreferencesManager(ctx: Context, val gson: Gson) {
     fun setLastUpdateTime(lastUpdate: Long) = prefs.edit().putLong(LAST_UPDATE_KEY, lastUpdate).apply()
 
     fun getLastUpdateTime() = prefs.getLong(LAST_UPDATE_KEY, -1)
+
+    fun setLastInsertedWod(wodId: Long?) {
+        if (wodId != null) {
+            prefs.edit().putLong(LAST_INSERTED_WOD_KEY, wodId).apply()
+        }
+    }
+
+    fun getLastInsertedWod() = prefs.getLong(LAST_INSERTED_WOD_KEY, -1)
+
+    fun clearLastInsertedWod() = prefs.edit().putLong(LAST_INSERTED_WOD_KEY, -1).apply()
 
     fun clear() = prefs.edit().clear().apply()
 }

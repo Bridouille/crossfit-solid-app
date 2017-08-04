@@ -16,6 +16,7 @@ import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.features.wods.WodsFragment
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
+import com.bridou_n.crossfitsolid.utils.jobs.FetchWodsJob
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        bottomNav.selectedItemId = savedInstanceState?.getInt(POSITION_KEY) ?: R.id.action_wod
+        bottomNav.selectedItemId = savedInstanceState?.getInt(POSITION_KEY) ?: R.id.action_account
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

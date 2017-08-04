@@ -36,6 +36,9 @@ class WodsPresenter(val view: WodsContract.View,
                     prefs.setLastUpdateTime(Date().time)
                     view.showLoading(false)
                     view.showLastUpdate(prefs.getLastUpdateTime())
+                    if (paged == 0) { // If we are refreshing the first page, scroll to top
+                        view.scrollToTop()
+                    }
 
                     val items = resp?.channel?.items
 

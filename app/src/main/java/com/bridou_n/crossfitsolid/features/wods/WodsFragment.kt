@@ -105,6 +105,10 @@ class WodsFragment : Fragment(), WodsContract.View {
         toolbar.subtitle = String.format(getString(R.string.last_update_x), lastUpdate)
     }
 
+    override fun scrollToTop() {
+        rv.smoothScrollToPosition(0)
+    }
+
     override fun showLoading(show: Boolean) {
         if (show) {
             toolbar.setTitle(R.string.updating)

@@ -7,6 +7,7 @@ package com.bridou_n.crossfitsolid.features.wods
 interface WodsContract {
     interface View {
         fun showLastUpdate(lastUpdateTime: Long)
+        fun scrollToTop()
 
         fun showLoading(show: Boolean)
         fun showEmptyState(show: Boolean)

@@ -6,9 +6,13 @@ import com.bridou_n.crossfitsolid.DI.components.DaggerAppComponent
 import com.bridou_n.crossfitsolid.DI.modules.AppModule
 import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
 import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
+import com.bridou_n.crossfitsolid.utils.jobs.FetchJobCreator
+import com.bridou_n.crossfitsolid.utils.jobs.FetchWodsJob
+import com.evernote.android.job.JobManager
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import net.danlew.android.joda.JodaTimeAndroid
+
 
 /**
  * Created by bridou_n on 25/07/2017.
@@ -36,5 +40,9 @@ class AppSingleton : Application() {
 
         Realm.setDefaultConfiguration(realmConfig)
         JodaTimeAndroid.init(this)
+
+        JobManager.create(this).addJobCreator(FetchJobCreator())
+
+        FetchWodsJob.scheduleJob()
     }
 }

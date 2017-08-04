@@ -11,6 +11,7 @@ import com.bridou_n.crossfitsolid.features.classes.DayViewFragment
 import com.bridou_n.crossfitsolid.features.classes.DayViewPresenter
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.features.wods.WodsFragment
+import com.bridou_n.crossfitsolid.utils.jobs.FetchWodsJob
 import com.google.gson.Gson
 import dagger.Component
 import javax.inject.Singleton
@@ -36,4 +37,6 @@ interface AppComponent {
     fun inject(frag: DayViewFragment)
     fun inject(frag: WodsFragment)
     fun inject(frag: AccountFragment)
+
+    fun inject(job: FetchWodsJob)
 }
