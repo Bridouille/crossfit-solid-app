@@ -23,6 +23,7 @@ import com.bridou_n.crossfitsolid.utils.extensionFunctions.snackBar
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import io.realm.Realm
 import javax.inject.Inject
 
 /**
@@ -43,6 +44,7 @@ class AccountFragment : Fragment(), AccountContract.View {
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
     @Inject lateinit var gson: Gson
+    var realm: Realm = Realm.getDefaultInstance()
 
     lateinit var presenter: AccountContract.Presenter
 
@@ -50,7 +52,7 @@ class AccountFragment : Fragment(), AccountContract.View {
         super.onCreate(savedInstanceState)
         component().inject(this)
         setStatusBarColor(R.color.colorPrimaryDark)
-        presenter = AccountPresenter(this, bookingService, prefs, gson)
+        presenter = AccountPresenter(this, bookingService, realm, prefs, gson)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -1,19 +1,14 @@
 package com.bridou_n.crossfitsolid.features.account
 
-import android.util.Log
 import com.bridou_n.crossfitsolid.API.BookingService
-import com.bridou_n.crossfitsolid.models.account.Profile
 import com.bridou_n.crossfitsolid.utils.BasePresenter
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.google.gson.Gson
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
-import java.util.*
+import io.realm.Realm
 
 /**
  * Created by bridou_n on 30/07/2017.
@@ -21,6 +16,7 @@ import java.util.*
 
 class AccountPresenter(val view: AccountContract.View,
                        val api: BookingService,
+                       val realm: Realm,
                        val prefs: PreferencesManager,
                        val gson: Gson) : AccountContract.Presenter, BasePresenter() {
 
@@ -59,6 +55,9 @@ class AccountPresenter(val view: AccountContract.View,
     }
 
     override fun logout() {
+        realm.executeTransactionAsync { tRealm ->
+            tRealm.deleteAll()
+        }
         prefs.clear()
         view.logoutRedirect()
     }

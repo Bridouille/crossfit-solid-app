@@ -18,7 +18,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textSize="24sp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
         tools:text="Tisdag"
         />
 

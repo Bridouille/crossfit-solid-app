@@ -38,6 +38,7 @@ class FetchWodsJob : Job() {
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
+            // Between 4am and 5am
             val TARGET_HOUR = 4L // hours.toLong()
             val TARGET_MINUTE = 0L // minutes.toLong()
             val WINDOW_LENGTH = 60L
