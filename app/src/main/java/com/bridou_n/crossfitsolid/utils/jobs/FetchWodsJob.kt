@@ -1,10 +1,17 @@
 package com.bridou_n.crossfitsolid.utils.jobs
 
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.NotificationCompat
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.AppSingleton
 import com.bridou_n.crossfitsolid.R
+import com.bridou_n.crossfitsolid.features.MainActivity
 import com.bridou_n.crossfitsolid.models.wods.Item
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.copyPaste.DailyExecutionWindow
@@ -15,13 +22,6 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
-import android.content.Context.NOTIFICATION_SERVICE
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.support.v4.content.ContextCompat
-import com.bridou_n.crossfitsolid.features.MainActivity
 
 
 /**
@@ -38,9 +38,9 @@ class FetchWodsJob : Job() {
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
-            val TARGET_HOUR = hour.toLong() // 5L
-            val TARGET_MINUTE = minute.toLong() // 30L
-            val WINDOW_LENGTH = 0L
+            val TARGET_HOUR = 4L // hours.toLong()
+            val TARGET_MINUTE = 0L // minutes.toLong()
+            val WINDOW_LENGTH = 60L
 
             val executionWindow = DailyExecutionWindow(hour, minute, TARGET_HOUR, TARGET_MINUTE, WINDOW_LENGTH)
 
@@ -71,9 +71,6 @@ class FetchWodsJob : Job() {
             if (!prefs.isLogged()) { // If we're not logged we don't continue
                 return Result.FAILURE
             }
-
-            // TODO: removes this
-            prefs.clearLastInsertedWod()
 
             val rssResponse = wodsService.getWods()
                     .blockingGet()
