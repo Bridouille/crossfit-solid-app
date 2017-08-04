@@ -2,7 +2,6 @@ package com.bridou_n.crossfitsolid.features
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -16,17 +15,20 @@ import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.features.wods.WodsFragment
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.component
-import com.bridou_n.crossfitsolid.utils.jobs.FetchWodsJob
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        val ACTIVE_TAB = "active_tab"
+    }
+
+    val DEFAULT_TAB = R.id.action_classes
 
     @BindView(R.id.bottom_navigation) lateinit var bottomNav: BottomNavigationView
 
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
-
-    private val POSITION_KEY = "position"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +58,14 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        bottomNav.selectedItemId = savedInstanceState?.getInt(POSITION_KEY) ?: R.id.action_account
+
+        val activeTab = intent?.extras?.getInt(ACTIVE_TAB, DEFAULT_TAB) ?: DEFAULT_TAB
+
+        bottomNav.selectedItemId = savedInstanceState?.getInt(ACTIVE_TAB) ?: activeTab
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putInt(POSITION_KEY, bottomNav.selectedItemId)
+        outState?.putInt(ACTIVE_TAB, bottomNav.selectedItemId)
         super.onSaveInstanceState(outState)
     }
 

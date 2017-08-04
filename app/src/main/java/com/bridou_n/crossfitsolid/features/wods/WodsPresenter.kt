@@ -1,5 +1,6 @@
 package com.bridou_n.crossfitsolid.features.wods
 
+import android.text.format.DateUtils
 import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.utils.BasePresenter
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
@@ -22,8 +23,13 @@ class WodsPresenter(val view: WodsContract.View,
     var disposables: CompositeDisposable = CompositeDisposable()
 
     override fun start() {
-        view.showLastUpdate(prefs.getLastUpdateTime())
-        refresh()
+        val lastUpdate = prefs.getLastUpdateTime()
+
+        view.showLastUpdate(lastUpdate)
+        // If the last update is more than a day ago, automatically refresh
+        if (Date().time - lastUpdate > DateUtils.DAY_IN_MILLIS) {
+            refresh()
+        }
     }
 
     override fun refresh(paged: Int) {

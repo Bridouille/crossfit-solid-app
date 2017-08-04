@@ -1,8 +1,10 @@
 package com.bridou_n.crossfitsolid.utils.jobs
 
+import android.support.v7.app.NotificationCompat
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.AppSingleton
+import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.models.wods.Item
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.copyPaste.DailyExecutionWindow
@@ -13,6 +15,14 @@ import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+import android.content.Context.NOTIFICATION_SERVICE
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat
+import com.bridou_n.crossfitsolid.features.MainActivity
+
 
 /**
  * Created by bridou_n on 04/08/2017.
@@ -22,7 +32,7 @@ class FetchWodsJob : Job() {
 
     companion object {
         const val TAG = "fetch_wods_job_tag"
-        
+
         fun scheduleJob(updateCurrent: Boolean = true) : Int {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -48,6 +58,7 @@ class FetchWodsJob : Job() {
 
     @Inject lateinit var wodsService: WodsService
     @Inject lateinit var prefs: PreferencesManager
+    @Inject lateinit var ctx: Context
 
     init {
         AppSingleton.component.inject(this)
@@ -83,7 +94,7 @@ class FetchWodsJob : Job() {
                             tRealm.copyToRealmOrUpdate(items[i])
                         }
                     }
-                    triggerNewWodNotification()
+                    triggerNewWodNotification(items[0])
                     return Result.SUCCESS
                 }
             }
@@ -98,7 +109,27 @@ class FetchWodsJob : Job() {
         }
     }
 
-    fun triggerNewWodNotification() {
-        Log.d(TAG, "Trigerring new wod notification!")
+    fun triggerNewWodNotification(item: Item) {
+        Log.d(TAG, "Triggering new wod notification!")
+
+        val resultIntent = Intent(ctx, MainActivity::class.java)
+        resultIntent.putExtra(MainActivity.ACTIVE_TAB, R.id.action_wod)
+
+        val contentIntent = PendingIntent.getActivity(ctx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val mBuilder = NotificationCompat.Builder(ctx)
+                .setSmallIcon(R.mipmap.ic_notification_logo)
+                .setContentTitle(ctx.getString(R.string.todays_wod))
+                .setContentText(String.format(ctx.getString(R.string.checkout_the_wod_for_x), item.title))
+                .setContentIntent(contentIntent)
+                .setAutoCancel(true)
+                .setColor(ContextCompat.getColor(ctx, R.color.colorPrimary))
+
+        // Sets an ID for the notification
+        val mNotificationId = 1
+        // Gets an instance of the NotificationManager service
+        val mNotifyMgr = ctx.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        // Builds the notification and issues it.
+        mNotifyMgr.notify(mNotificationId, mBuilder.build())
     }
 }
