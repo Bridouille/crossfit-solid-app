@@ -56,6 +56,7 @@ class WodsPresenter(val view: WodsContract.View,
                         }
                     }
                 }, { err ->
+                    err.printStackTrace()
                     view.showLoading(false)
                     view.showLastUpdate(prefs.getLastUpdateTime())
                     view.showError(getErrorMessage(err, gson), paged)
