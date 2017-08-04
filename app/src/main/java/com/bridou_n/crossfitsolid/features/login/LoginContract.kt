@@ -16,5 +16,6 @@ interface LoginContract {
         fun stop()
 
         fun onLoginClicked(username: String, password: String)
+        fun onForgotPassword(email: String)
     }
 }

@@ -37,4 +37,9 @@
     <string name="workout_of_the_day">Workout of the day</string>
     <string name="todays_wod">Today\'s wod</string>
     <string name="checkout_the_wod_for_x">Checkout the new wod for %1$s!</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="instructions_have_been_sent">We have sent a message to your e-mail address with instructions on how to reset your password.</string>
+    <string name="email_not_valid">The email provided is not valid</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="reset_instructions">Enter the email address you used when you registered. Instructions for resetting your password will be sent to the e-mail address you specify.</string>
 </resources>

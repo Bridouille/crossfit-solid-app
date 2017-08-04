@@ -65,7 +65,7 @@
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@android:color/white"
             app:layout_constraintTop_toBottomOf="@+id/til_email"
-            app:layout_constraintBottom_toTopOf="@+id/fab_login"
+            app:layout_constraintBottom_toTopOf="@+id/forgot_password"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
@@ -81,6 +81,19 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/til_password"
+            app:layout_constraintBottom_toTopOf="@+id/fab_login"
+            app:layout_constraintRight_toRightOf="@id/til_password"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:text="@string/forgot_password"
+            android:textStyle="italic"
+            />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_login"
             android:layout_width="wrap_content"
@@ -90,7 +103,7 @@
             app:srcCompat="@drawable/ic_chevron_right_black_24dp"
             app:useCompatPadding="true"
             app:fabSize="normal"
-            app:layout_constraintTop_toBottomOf="@+id/til_password"
+            app:layout_constraintTop_toBottomOf="@+id/forgot_password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -101,7 +114,7 @@
             android:id="@+id/loading_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/til_password"
+            app:layout_constraintTop_toBottomOf="@+id/forgot_password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

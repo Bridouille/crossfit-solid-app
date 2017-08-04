@@ -1,15 +1,16 @@
 package com.bridou_n.crossfitsolid.features.login
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.ScrollView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.bridou_n.crossfitsolid.API.BookingService
 import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.MainActivity
@@ -20,6 +21,7 @@ import com.bridou_n.crossfitsolid.utils.extensionFunctions.hideView
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.showSnackbar
 import com.wang.avi.AVLoadingIndicatorView
 import javax.inject.Inject
+
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
 
@@ -47,6 +49,22 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun onResume() {
         super.onResume()
         presenter.start()
+    }
+
+    @OnClick(R.id.forgot_password)
+    fun onForgotPasswordClicked() {
+        val view = layoutInflater.inflate(R.layout.dialog_reset_password, null)
+        val input = view.findViewById(R.id.input_field) as EditText
+
+        val builder = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle)
+                .setTitle(getString(R.string.enter_your_email))
+                .setView(view)
+                .setPositiveButton(getString(android.R.string.ok), DialogInterface.OnClickListener {
+                    _, _ -> presenter.onForgotPassword(input.text.toString())
+                })
+                .setNegativeButton(getString(android.R.string.cancel), null)
+
+        builder.show()
     }
 
     @OnClick(R.id.fab_login)
