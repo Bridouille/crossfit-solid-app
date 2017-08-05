@@ -39,4 +39,10 @@
     <string name="the_wods_will_appear_here">Une fois chargé, les WODs apparaitrons ici…</string>
     <string name="workout_of_the_day">Workout du jour</string>
     <string name="todays_wod">Workout du jour</string>
+
+    <string name="forgot_password">Mot de passe oublié?</string>
+    <string name="instructions_have_been_sent">Nous vous avons envoyé un email avec les instructions pour changer votre mot de passe.</string>
+    <string name="email_not_valid">L\'email n\'est pas valide</string>
+    <string name="enter_your_email">Entrez votre email</string>
+    <string name="reset_instructions">Entrez l\'adresse email que vous abez utilisé pour vous inscrire. Les instructions pour changer votre mot de passe vont être envoyées à l\'email que vous renseignez.</string>
 </resources>
