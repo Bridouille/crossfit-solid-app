@@ -39,8 +39,8 @@ class FetchWodsJob : Job() {
             val minute = calendar.get(Calendar.MINUTE)
 
             // Between 4am and 5am
-            val TARGET_HOUR = 4L // hours.toLong()
-            val TARGET_MINUTE = 0L // minutes.toLong()
+            val TARGET_HOUR = 4L // hour.toLong()
+            val TARGET_MINUTE = 0L // minute.toLong()
             val WINDOW_LENGTH = 60L
 
             val executionWindow = DailyExecutionWindow(hour, minute, TARGET_HOUR, TARGET_MINUTE, WINDOW_LENGTH)
@@ -79,6 +79,7 @@ class FetchWodsJob : Job() {
             val items = rssResponse?.channel?.items
 
             if (items != null && items.isNotEmpty()) {
+                prefs.setLastUpdateTime(Date().time)
                 if (prefs.getLastInsertedWod() == items[0].pubDate) {
                     // We don't have any new wod
                     Log.d(TAG, "We don't have any new wods")
@@ -86,7 +87,6 @@ class FetchWodsJob : Job() {
                 } else {
                     Log.d(TAG, "Set last inserted wod to : ${items[0].pubDate}")
                     prefs.setLastInsertedWod(items[0].pubDate)
-                    prefs.setLastUpdateTime(Date().time)
                     realm.executeTransactionAsync { tRealm ->
                         for (i in 0..items.size - 1) {
                             tRealm.copyToRealmOrUpdate(items[i])
