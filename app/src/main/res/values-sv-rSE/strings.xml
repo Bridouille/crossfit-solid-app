@@ -17,7 +17,7 @@
     <string name="book_now">Boka nu</string>
     <string name="cancel_my_booking">Avboka min bokning</string>
     <string name="join_the_waiting_list">Gå med i väntelistan</string>
-    <string name="no_classes_this_day">Det verkar som om det inte finns några lektioner idag!</string>
+    <string name="no_classes_this_day">Där finns tyvärr inga klasser idag!</string>
     <string name="loading_classes">Prova att göra en 1 AMRAP burpees medan den laddas ..</string>
     <string name="retry">Försök igen</string>
     <string name="an_error_occurred">Hoppsan. Ett fel uppstod. Kontrollera din anslutning och försök igen senare!</string>
