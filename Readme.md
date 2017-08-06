@@ -2,9 +2,7 @@
 
 Android app for CrossFit Solid [available on Google Play](https://play.google.com/store/apps/details?id=com.bridou_n.crossfitsolid).
 
-<img src="screenshots/screen-1.png" width="25%" />     
-<img src="screenshots/screen-2.png" width="25%" />  
- <img src="screenshots/screen-3.png" width="25%" />
+<img src="screenshots/screen-1.png" width="25%" /> <img src="screenshots/screen-2.png" width="25%" /> <img src="screenshots/screen-3.png" width="25%" />
 
 Available for android 4.4+
 
