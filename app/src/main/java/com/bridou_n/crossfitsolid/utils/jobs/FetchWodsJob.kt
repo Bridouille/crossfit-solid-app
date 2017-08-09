@@ -66,6 +66,8 @@ class FetchWodsJob : Job() {
     }
 
     override fun onRunJob(params: Params?): Result {
+        Log.d(TAG, "onRunJob()")
+
         val realm: Realm = Realm.getDefaultInstance()
 
         try {
@@ -73,6 +75,7 @@ class FetchWodsJob : Job() {
                 return Result.FAILURE
             }
 
+            Log.d(TAG, "We're logged!")
             val rssResponse = wodsService.getWods()
                     .blockingGet()
 
