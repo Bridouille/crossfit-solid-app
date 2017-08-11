@@ -129,6 +129,10 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         }
     }
 
+    override fun showRefresh(show: Boolean) {
+        refreshLayout.isRefreshing = show
+    }
+
     override fun showEmptyView() {
         hideAll()
         emptyContainer.show()

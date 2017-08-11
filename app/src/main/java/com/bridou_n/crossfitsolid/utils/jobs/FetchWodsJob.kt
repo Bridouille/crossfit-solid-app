@@ -40,7 +40,7 @@ class FetchWodsJob : Job() {
 
             // Between 4am and 5am
             val TARGET_HOUR = 4L // hour.toLong()
-            val TARGET_MINUTE = 0L // minute.toLong()
+            val TARGET_MINUTE = 15L // minute.toLong()
             val WINDOW_LENGTH = 60L
 
             val executionWindow = DailyExecutionWindow(hour, minute, TARGET_HOUR, TARGET_MINUTE, WINDOW_LENGTH)
@@ -90,7 +90,7 @@ class FetchWodsJob : Job() {
                 } else {
                     Log.d(TAG, "Set last inserted wod to : ${items[0].pubDate}")
                     prefs.setLastInsertedWod(items[0].pubDate)
-                    realm.executeTransactionAsync { tRealm ->
+                    realm.executeTransaction { tRealm ->
                         for (i in 0..items.size - 1) {
                             tRealm.copyToRealmOrUpdate(items[i])
                         }

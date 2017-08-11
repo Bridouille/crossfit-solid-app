@@ -12,6 +12,7 @@ interface DayViewContract {
         fun displayClasses(bookings: Array<GroupActivity>)
 
         fun showLoading(show: Boolean)
+        fun showRefresh(show: Boolean)
         fun showEmptyView()
         fun showError(err: String?) : Observable<Int>
         fun showSmallError(err: String?)

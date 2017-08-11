@@ -90,14 +90,17 @@ class DayViewPresenter(val view: DayViewContract.View,
             api.bookActivity(prefs.getUserId() ?: "", BookingRequest(bookingId, isWaitingList))
         }
 
+        view.showRefresh(true)
         disposables.add(req
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    view.showRefresh(false)
                     refresh()
                 }, { err ->
                     err.printStackTrace()
 
+                    view.showRefresh(false)
                     view.showSmallError(getErrorMessage(err, gson))
                 }))
 
