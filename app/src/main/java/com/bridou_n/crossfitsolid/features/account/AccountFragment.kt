@@ -98,6 +98,7 @@ class AccountFragment : Fragment(), AccountContract.View {
 
     override fun onDestroy() {
         presenter.stop()
+        realm.close()
         super.onDestroy()
     }
 }

@@ -139,8 +139,8 @@ class WodsFragment : Fragment(), WodsContract.View {
     }
 
     override fun onPause() {
-        super.onPause()
         presenter.stop()
+        super.onPause()
     }
 
     override fun onDestroy() {

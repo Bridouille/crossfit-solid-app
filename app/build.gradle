@@ -10,8 +10,8 @@ android {
         applicationId "com.bridou_n.crossfitsolid"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.0.6"
+        versionCode 9
+        versionName "1.0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
@@ -26,6 +26,7 @@ android {
         debug {
             minifyEnabled true
             shrinkResources true
+            applicationIdSuffix = ".debug"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
