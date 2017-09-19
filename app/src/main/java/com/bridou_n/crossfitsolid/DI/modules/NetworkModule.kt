@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,23 +46,10 @@ import javax.inject.Singleton
 
     @Provides @Singleton @Named("logging")
     fun provideLoggingInterceptor() : Interceptor {
-        return Interceptor { chain ->
-            val req = chain.request()
+        val interceptor = HttpLoggingInterceptor()
 
-            // Logging what's happenning
-            val t1 = System.nanoTime()
-            Log.d("OKHTTP3", "${req.method()} ==> ${req.url()} on ${chain.connection()}\nHeaders: ${req.headers()}Body: ${req.body().toString()}")
-
-            val response = chain.proceed(req)
-
-            val bodyString = response.body()?.string()
-            val executionTime = (System.nanoTime() - t1) / 1e6
-            Log.d("OKHTTP3", "${response.request().method()} <== (${response.code()}) ${response.request().url()} in $executionTime ms \n$bodyString")
-
-            response.newBuilder()
-                    .body(ResponseBody.create(response.body()?.contentType(), bodyString))
-                    .build()
-        }
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        return interceptor
     }
 
     @Provides @Singleton

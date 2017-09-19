@@ -10,8 +10,8 @@ android {
         applicationId "com.bridou_n.crossfitsolid"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
@@ -81,13 +81,14 @@ dependencies {
         exclude group: 'stax', module: 'stax'
     }
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
     // Gson
     compile 'com.google.code.gson:gson:2.8.1'
 
     // Butterknife
-    compile 'com.jakewharton:butterknife:8.7.0'
-    kapt 'com.jakewharton:butterknife-compiler:8.7.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // LoadingIndicatorView
     compile 'com.wang.avi:library:2.1.3'
@@ -96,7 +97,7 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.9'
 
     // Lottie
-    compile 'com.airbnb.android:lottie:2.1.0'
+    compile 'com.airbnb.android:lottie:2.2.0'
 
     // Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'

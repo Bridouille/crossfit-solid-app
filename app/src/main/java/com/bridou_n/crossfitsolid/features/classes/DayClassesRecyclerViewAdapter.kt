@@ -78,9 +78,9 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
             activity = act
             title.text = activity.name
             startEnd.text = "${activity.duration?.start?.getHourMinute()} ${view.context.getString(R.string.till)} ${activity.duration?.end?.getHourMinute()}"
-            instructor.text = activity.instructors?.get(0)?.name ?: view.context.getString(R.string.open_gym)
+            instructor.text = activity.instructors?.getOrNull(0)?.name ?: view.context.getString(R.string.open_gym)
 
-            if (instructor.text == "Joanna") {
+            if (activity.instructors?.getOrNull(0)?.id == 43) {
                 instructor.text = "${instructor.text} \uD83D\uDCAA"
             }
 
