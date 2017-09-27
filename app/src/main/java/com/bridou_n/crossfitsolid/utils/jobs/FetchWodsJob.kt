@@ -2,21 +2,26 @@ package com.bridou_n.crossfitsolid.utils.jobs
 
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.NotificationCompat
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.WodsService
-import com.bridou_n.crossfitsolid.AppSingleton
+import com.bridou_n.crossfitsolid.BuildConfig
+import com.bridou_n.crossfitsolid.DI.components.DaggerAppComponent
+import com.bridou_n.crossfitsolid.DI.modules.ContextModule
+import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
+import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.MainActivity
 import com.bridou_n.crossfitsolid.models.wods.Item
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.copyPaste.DailyExecutionWindow
+import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
+import com.google.gson.GsonBuilder
 import io.realm.Realm
 import retrofit2.HttpException
 import java.io.IOException
@@ -38,10 +43,10 @@ class FetchWodsJob : Job() {
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
-            // Between 4am and 5am
-            val TARGET_HOUR = 4L // hour.toLong()
-            val TARGET_MINUTE = 15L // minute.toLong()
-            val WINDOW_LENGTH = 60L
+            // Between 4:15am and 5:15am
+            val TARGET_HOUR = if (BuildConfig.DEBUG) hour.toLong() else 4L
+            val TARGET_MINUTE = if (BuildConfig.DEBUG) minute.toLong() + 1 else 15L
+            val WINDOW_LENGTH = if (BuildConfig.DEBUG) 0 else 60L
 
             val executionWindow = DailyExecutionWindow(hour, minute, TARGET_HOUR, TARGET_MINUTE, WINDOW_LENGTH)
 
@@ -59,14 +64,15 @@ class FetchWodsJob : Job() {
 
     @Inject lateinit var wodsService: WodsService
     @Inject lateinit var prefs: PreferencesManager
-    @Inject lateinit var ctx: Context
-
-    init {
-        AppSingleton.component.inject(this)
-    }
 
     override fun onRunJob(params: Params?): Result {
         Log.d(TAG, "onRunJob()")
+        DaggerAppComponent.builder()
+                .contextModule(ContextModule(context)) // Getting the context from the job and not injecting with the AppSingleton component
+                .preferencesModule(PreferencesModule())
+                .networkModule(NetworkModule())
+                .build()
+                .inject(this)
 
         val realm: Realm = Realm.getDefaultInstance()
 
@@ -83,6 +89,11 @@ class FetchWodsJob : Job() {
 
             if (items != null && items.isNotEmpty()) {
                 prefs.setLastUpdateTime(Date().time)
+
+                if (BuildConfig.DEBUG) { // To fire the notification at all time
+                    prefs.clearLastInsertedWod()
+                }
+
                 if (prefs.getLastInsertedWod() == items[0].pubDate) {
                     // We don't have any new wod
                     Log.d(TAG, "We don't have any new wods")
@@ -113,23 +124,23 @@ class FetchWodsJob : Job() {
     fun triggerNewWodNotification(item: Item) {
         Log.d(TAG, "Triggering new wod notification!")
 
-        val resultIntent = Intent(ctx, MainActivity::class.java)
+        val resultIntent = Intent(context, MainActivity::class.java)
         resultIntent.putExtra(MainActivity.ACTIVE_TAB, R.id.action_wod)
 
-        val contentIntent = PendingIntent.getActivity(ctx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val contentIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val mBuilder = NotificationCompat.Builder(ctx)
+        val mBuilder = NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_notification_logo)
-                .setContentTitle(ctx.getString(R.string.todays_wod))
-                .setContentText(String.format(ctx.getString(R.string.checkout_the_wod_for_x), item.title))
+                .setContentTitle(context.getString(R.string.todays_wod))
+                .setContentText(String.format(context.getString(R.string.checkout_the_wod_for_x), item.title))
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
-                .setColor(ContextCompat.getColor(ctx, R.color.colorPrimary))
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
 
         // Sets an ID for the notification
         val mNotificationId = 1
         // Gets an instance of the NotificationManager service
-        val mNotifyMgr = ctx.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val mNotifyMgr = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         // Builds the notification and issues it.
         mNotifyMgr.notify(mNotificationId, mBuilder.build())
     }

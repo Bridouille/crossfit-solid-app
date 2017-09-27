@@ -3,7 +3,7 @@ package com.bridou_n.crossfitsolid
 import android.app.Application
 import com.bridou_n.crossfitsolid.DI.components.AppComponent
 import com.bridou_n.crossfitsolid.DI.components.DaggerAppComponent
-import com.bridou_n.crossfitsolid.DI.modules.AppModule
+import com.bridou_n.crossfitsolid.DI.modules.ContextModule
 import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
 import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
 import com.bridou_n.crossfitsolid.utils.jobs.FetchJobCreator
@@ -27,7 +27,7 @@ class AppSingleton : Application() {
     override fun onCreate() {
         super.onCreate()
         component = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
+                .contextModule(ContextModule(this))
                 .preferencesModule(PreferencesModule())
                 .networkModule(NetworkModule())
                 .build()

@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * Created by bridou_n on 25/07/2017.
  */
 
-@Module class AppModule(val app: AppSingleton) {
+@Module class ContextModule(val app: Context) {
     @Provides @Singleton
-    fun provideApp() = app as Context
+    fun provideApp() = app
 }
