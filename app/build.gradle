@@ -10,8 +10,8 @@ android {
         applicationId "com.bridou_n.crossfitsolid"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 11
-        versionName "1.1.1"
+        versionCode 12
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
@@ -110,4 +110,10 @@ dependencies {
 
     // Job schedulers stuff
     compile 'com.evernote:android-job:1.1.11'
+
+    // Crash reporting
+    compile 'com.google.firebase:firebase-core:11.4.2'
+    compile 'com.google.firebase:firebase-crash:11.4.2'
 }
+
+apply plugin: 'com.google.gms.google-services'

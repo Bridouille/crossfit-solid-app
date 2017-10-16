@@ -1,6 +1,7 @@
 package com.bridou_n.crossfitsolid.utils
 
 import com.bridou_n.crossfitsolid.models.classes.BookingError
+import com.google.firebase.crash.FirebaseCrash
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.HttpException
@@ -14,6 +15,7 @@ open class BasePresenter() {
 
 
     fun getErrorMessage(err: Throwable, gson: Gson) : String? {
+        FirebaseCrash.report(err)
         return when (err) {
             is HttpException -> {
                 val body = err.response().errorBody()

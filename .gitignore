@@ -9,5 +9,6 @@
 .externalNativeBuild
 
 /.idea
+/app/google-services.json
 
 /app/app-release.apk
