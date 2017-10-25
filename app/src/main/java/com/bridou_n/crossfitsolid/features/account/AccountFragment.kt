@@ -75,7 +75,11 @@ class AccountFragment : Fragment(), AccountContract.View {
         email.text = profile.email ?: getString(R.string.not_provided)
         cardnumber.text = String.format("%s%s", getString(R.string.cardnumber), profile.cardNumber)
         customernumber.text = String.format("%s%s", getString(R.string.customernumber), profile.customerNumber)
-        phone.text = profile.mobilePhone ?: getString(R.string.not_provided)
+        phone.text = if (profile.mobilePhone == null) {
+            getString(R.string.not_provided)
+        } else {
+            String.format("+%d %s", profile.mobilePhone.countryCode ?: 46, profile.mobilePhone.number ?: "")
+        }
     }
 
     override fun showError(err: String?) {

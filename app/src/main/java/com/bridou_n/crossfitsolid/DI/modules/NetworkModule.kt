@@ -6,6 +6,7 @@ import com.bridou_n.crossfitsolid.API.LoginService
 import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.models.classes.LoginRequest
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
+import com.bridou_n.crossfitsolid.utils.copyPaste.GsonUTCDateAdapter
 import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -17,6 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
+import java.util.*
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -94,8 +96,8 @@ import javax.inject.Singleton
                 .build()
     }
 
-    @Provides @Singleton
-    fun provideGson() = GsonBuilder().setDateFormat(getIso8601Format()).create()
+    @Provides @Singleton // setDateFormat(getIso8601Format())
+    fun provideGson() = GsonBuilder().registerTypeAdapter(Date::class.java, GsonUTCDateAdapter()).create()
 
     @Provides @Singleton @Named("login")
     fun provideLoginRetrofit(@Named("login") httpClient: OkHttpClient, gson: Gson) : Retrofit {
