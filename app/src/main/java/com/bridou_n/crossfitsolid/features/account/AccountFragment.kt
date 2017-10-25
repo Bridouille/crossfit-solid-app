@@ -1,6 +1,7 @@
 package com.bridou_n.crossfitsolid.features.account
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -13,6 +14,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bridou_n.crossfitsolid.API.BookingService
+import com.bridou_n.crossfitsolid.BuildConfig
 import com.bridou_n.crossfitsolid.R
 import com.bridou_n.crossfitsolid.features.login.LoginActivity
 import com.bridou_n.crossfitsolid.models.account.Profile
@@ -41,6 +43,8 @@ class AccountFragment : Fragment(), AccountContract.View {
     @BindView(R.id.customernumber) lateinit var customernumber: TextView
     @BindView(R.id.phonenumber) lateinit var phone: TextView
 
+    @BindView(R.id.app_version) lateinit var version: TextView
+
     @Inject lateinit var bookingService: BookingService
     @Inject lateinit var prefs: PreferencesManager
     @Inject lateinit var gson: Gson
@@ -59,6 +63,9 @@ class AccountFragment : Fragment(), AccountContract.View {
         val v = inflater.inflate(R.layout.fragment_account, container, false)
         ButterKnife.bind(this, v)
         presenter.start()
+
+        version.text = String.format("version %s %s", BuildConfig.VERSION_NAME, if (BuildConfig.DEBUG) "(debug)" else "")
+
         return v
     }
 
