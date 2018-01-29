@@ -64,6 +64,7 @@ class WodsPresenter(val view: WodsContract.View,
     }
 
     override fun stop() {
+        view.showLoading(false)
         disposables.clear()
     }
 }

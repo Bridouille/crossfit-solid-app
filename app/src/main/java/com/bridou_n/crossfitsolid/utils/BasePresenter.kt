@@ -13,9 +13,7 @@ import java.io.IOException
 
 open class BasePresenter() {
 
-
     fun getErrorMessage(err: Throwable, gson: Gson) : String? {
-        FirebaseCrash.report(err)
         return when (err) {
             is HttpException -> {
                 val body = err.response().errorBody()
@@ -24,7 +22,7 @@ open class BasePresenter() {
                     val error = gson.fromJson(body?.string(), BookingError::class.java)
 
                     error.errorCode ?: err.message()
-                } catch (e: JsonSyntaxException) {
+                } catch (e: Throwable) {
                     err.message
                 }
             }
@@ -32,6 +30,7 @@ open class BasePresenter() {
                 null
             }
             else -> {
+                FirebaseCrash.report(err)
                 err.message
             }
         }

@@ -33,7 +33,6 @@ class ClassesFragment : Fragment() {
         ButterKnife.bind(this, v)
 
         viewPager.adapter = DaysFragmentPagerAdapter(childFragmentManager, context)
-        viewPager.offscreenPageLimit = viewPager.adapter.count
         tabs.setupWithViewPager(viewPager)
 
         return v
