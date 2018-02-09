@@ -47,6 +47,9 @@ open class Item : RealmObject() {
             }
         }
 
+        // Trim the wod title to remove the word "password"
+        title = title?.replace("Lösenordsskyddad:", "")?.trim()
+
         // Removes the last link (to the full article)
         content = content?.substringBeforeLast("<p>")
 

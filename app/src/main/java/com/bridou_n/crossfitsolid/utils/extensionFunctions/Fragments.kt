@@ -33,12 +33,12 @@ fun Fragment.setStatusBarColor(color: Int) {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && activity != null) {
         // clear FLAG_TRANSLUCENT_STATUS flag:
-        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
 
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
         // finally change the color
-        activity.window.statusBarColor = ContextCompat.getColor(activity, color)
+        activity?.window?.statusBarColor = ContextCompat.getColor(activity!!, color)
     }
 }

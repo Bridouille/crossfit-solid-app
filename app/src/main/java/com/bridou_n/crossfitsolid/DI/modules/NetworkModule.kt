@@ -21,6 +21,9 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.util.*
 import javax.inject.Named
 import javax.inject.Singleton
+import android.R.id.edit
+
+
 
 /**
  * Created by bridou_n on 25/07/2017.
@@ -52,6 +55,44 @@ import javax.inject.Singleton
 
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
+    }
+
+    @Provides @Singleton @Named("insertCookies")
+    fun provideInsertCookiesInterceptor(prefs: PreferencesManager) : Interceptor {
+        return Interceptor { chain ->
+            val builder = chain.request().newBuilder()
+            val cookies = prefs.getCookies()
+
+            cookies?.let {
+                for (cookie in cookies) {
+                    builder.addHeader("Cookie", cookie)
+                    // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
+                    Log.d("OkHttp", "Adding Header: " + cookie)
+                }
+            }
+
+            chain.proceed(builder.build())
+        }
+    }
+
+    @Provides @Singleton @Named("storeCookies")
+    fun provideStoreCookiesInterceptor(prefs: PreferencesManager) : Interceptor {
+        return Interceptor {chain ->
+            val originalResponse = chain.proceed(chain.request())
+
+            if (!originalResponse.headers("Set-Cookie").isEmpty()) {
+                val cookies = HashSet<String>()
+
+                for (header in originalResponse.headers("Set-Cookie")) {
+                    cookies.add(header)
+                    Log.d("OkHttp", "Storing cookie: $header")
+                }
+
+                prefs.setCookies(cookies)
+            }
+
+            originalResponse
+        }
     }
 
     @Provides @Singleton
@@ -88,10 +129,14 @@ import javax.inject.Singleton
     @Provides @Singleton
     fun provideOkHttpClient(@Named("injectToken") injectTokenInterceptor: Interceptor,
                             @Named("logging") loggingInterceptor: Interceptor,
+                            @Named("storeCookies") storeCookiesInterceptor: Interceptor,
+                            @Named("insertCookies") insertCookiesInterceptor: Interceptor,
                             authenticator: Authenticator) : OkHttpClient {
         return OkHttpClient.Builder()
                 .addInterceptor(injectTokenInterceptor)
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(storeCookiesInterceptor)
+                .addInterceptor(insertCookiesInterceptor)
                 .authenticator(authenticator)
                 .build()
     }
@@ -109,12 +154,22 @@ import javax.inject.Singleton
                 .build()
     }
 
-    @Provides @Singleton @Named("wods")
-    fun provideWodsRetrofit(httpClient: OkHttpClient) : Retrofit {
+    @Provides @Singleton @Named("wodsXml")
+    fun provideWodsXmlRetrofit(httpClient: OkHttpClient) : Retrofit {
         return Retrofit.Builder()
                 .baseUrl(WOD_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(SimpleXmlConverterFactory.create())
+                .client(httpClient)
+                .build()
+    }
+
+    @Provides @Singleton @Named("wodsJson")
+    fun provideWodsJsonRetrofit(httpClient: OkHttpClient, gson: Gson) : Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(WOD_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(httpClient)
                 .build()
     }
@@ -135,6 +190,14 @@ import javax.inject.Singleton
     @Provides @Singleton
     fun provideBookingService(retrofit: Retrofit) = retrofit.create(BookingService::class.java)
 
-    @Provides @Singleton
-    fun provideWodsService(@Named("wods") retrofit: Retrofit) = retrofit.create(WodsService::class.java)
+
+    @Provides @Singleton @Named("xmlFactory")
+    fun provideWodsXmlService(@Named("wodsXml") retrofit: Retrofit) : WodsService {
+        return retrofit.create(WodsService::class.java)
+    }
+
+    @Provides @Singleton @Named("jsonFactory")
+    fun provideWodsJsonService(@Named("wodsJson") retrofit: Retrofit) : WodsService {
+        return retrofit.create(WodsService::class.java)
+    }
 }

@@ -104,7 +104,7 @@ class AccountFragment : Fragment(), AccountContract.View {
 
     override fun logoutRedirect() {
         startActivity(Intent(activity, LoginActivity::class.java))
-        activity.finish()
+        activity?.finish()
     }
 
     override fun onDestroy() {

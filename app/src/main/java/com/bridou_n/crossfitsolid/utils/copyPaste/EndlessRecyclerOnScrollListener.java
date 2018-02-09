@@ -15,6 +15,7 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
 
     private int previousTotal = 0; // The total number of items in the dataset after the last load
     private boolean loading = true; // True if we are still waiting for the last set of data to load.
+    private boolean noMoreItems = false; // If there is no more items we are at the end of the scrollable liste, we can't load more items
     int firstVisibleItem, visibleItemCount, totalItemCount;
 
     private LinearLayoutManager mLinearLayoutManager;
@@ -51,7 +52,7 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
         }
 
         // End has been reached
-        if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + mVisibleThreshold)) {
+        if (!noMoreItems && !loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + mVisibleThreshold)) {
             Log.i("ScollListener", "I have " + totalItemCount + " items in the RV");
 
             loading = true;
@@ -71,4 +72,6 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     public void setLoading(boolean state) {
         loading = state;
     }
+
+    public void setNoMoreItems(boolean state) { noMoreItems = state; }
 }

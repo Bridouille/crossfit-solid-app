@@ -54,12 +54,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     @OnClick(R.id.forgot_password)
     fun onForgotPasswordClicked() {
         val view = layoutInflater.inflate(R.layout.dialog_reset_password, null)
-        val input = view.findViewById(R.id.input_field) as EditText
+        val input = view.findViewById<EditText>(R.id.input_field)
 
         val builder = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle)
                 .setTitle(getString(R.string.enter_your_email))
                 .setView(view)
-                .setPositiveButton(getString(android.R.string.ok), DialogInterface.OnClickListener {
+                .setPositiveButton(getString(android.R.string.ok), {
                     _, _ -> presenter.onForgotPassword(input.text.toString())
                 })
                 .setNegativeButton(getString(android.R.string.cancel), null)

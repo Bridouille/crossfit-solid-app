@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>cache_expiration_days</key>
+        <value>1</value>
+    </entry>
+
+    <entry>
+        <key>wod_pass</key>
+        <value></value>
+    </entry>
+
+</defaultsMap>

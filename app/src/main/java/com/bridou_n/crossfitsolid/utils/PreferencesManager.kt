@@ -2,9 +2,12 @@ package com.bridou_n.crossfitsolid.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.format.DateUtils
 import com.bridou_n.crossfitsolid.models.account.Profile
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import io.reactivex.Maybe
+import java.util.*
 
 /**
  * Created by bridou_n on 25/07/2017.
@@ -23,6 +26,8 @@ class PreferencesManager(ctx: Context, val gson: Gson) {
     private val PROFILE_KEY = "pref_profile"
     private val LAST_UPDATE_KEY = "pref_last_update"
     private val LAST_INSERTED_WOD_KEY = "pref_last_inserted_wod"
+    private val COOKIES_KEY = "cookies"
+    private val COOKIE_EXPIRY_KEY = "cookies_expiry"
 
     fun setUsername(username: String) {
         prefs.edit().putString(USERNAME_KEY, username).apply()
@@ -75,6 +80,17 @@ class PreferencesManager(ctx: Context, val gson: Gson) {
     fun getLastInsertedWod() = prefs.getLong(LAST_INSERTED_WOD_KEY, -1)
 
     fun clearLastInsertedWod() = prefs.edit().putLong(LAST_INSERTED_WOD_KEY, -1).apply()
+
+    fun setCookiesExpiryNow() = prefs.edit().putLong(COOKIE_EXPIRY_KEY, Date().time).apply()
+    fun hasExpiredCookies() : Boolean {
+        val cookieExpiry = prefs.getLong(COOKIE_EXPIRY_KEY, -1)
+
+        return Date().time - cookieExpiry > (DateUtils.DAY_IN_MILLIS * FirebaseRemoteConfig.getInstance().getLong("cache_expiration_days"))
+    }
+
+    fun getCookies() = prefs.getStringSet(COOKIES_KEY, null)
+    fun setCookies(set: HashSet<String>) = prefs.edit().putStringSet(COOKIES_KEY, set).apply()
+    fun clearCookies() = prefs.edit().remove(COOKIES_KEY).apply()
 
     fun clear() = prefs.edit().clear().apply()
 }

@@ -32,7 +32,7 @@ class ClassesFragment : Fragment() {
         val v = inflater.inflate(R.layout.fragment_classes, container, false)
         ButterKnife.bind(this, v)
 
-        viewPager.adapter = DaysFragmentPagerAdapter(childFragmentManager, context)
+        viewPager.adapter = DaysFragmentPagerAdapter(childFragmentManager, context!!)
         tabs.setupWithViewPager(viewPager)
 
         return v

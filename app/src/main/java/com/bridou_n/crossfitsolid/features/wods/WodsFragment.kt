@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,12 +29,15 @@ import io.realm.RealmResults
 import io.realm.Sort
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Created by bridou_n on 27/07/2017.
  */
 
 class WodsFragment : Fragment(), WodsContract.View {
+
+    private val TAG = this.javaClass.simpleName
 
     @BindView(R.id.refresh) lateinit var refresh: SwipeRefreshLayout
     @BindView(R.id.container) lateinit var container: CoordinatorLayout
@@ -42,7 +46,10 @@ class WodsFragment : Fragment(), WodsContract.View {
 
     @BindView(R.id.empty_container) lateinit var emptyContainer: ConstraintLayout
 
-    @Inject lateinit var wodsService: WodsService
+    @field:[Inject Named("xmlFactory")]
+    lateinit var wodsService: WodsService
+    @field:[Inject Named("jsonFactory")]
+    lateinit var passwordService: WodsService
     @Inject lateinit var prefs: PreferencesManager
     @Inject lateinit var gson: Gson
 
@@ -50,8 +57,9 @@ class WodsFragment : Fragment(), WodsContract.View {
     val realm: Realm = Realm.getDefaultInstance()
     val rvLayoutManager: LinearLayoutManager by lazy { LinearLayoutManager(context) }
     val rvScrollListener: EndlessRecyclerOnScrollListener by lazy {
-        object: EndlessRecyclerOnScrollListener(rvLayoutManager) {
+        object: EndlessRecyclerOnScrollListener(rvLayoutManager, 5, WodsPresenter.ITEMS_PER_PAGE) {
             override fun onLoadMore(currentPage: Int) {
+                Log.d(TAG, "onLoadMore()")
                 presenter.refresh(currentPage)
             }
         }
@@ -63,7 +71,7 @@ class WodsFragment : Fragment(), WodsContract.View {
 
         setStatusBarColor(R.color.colorPrimaryDark)
 
-        presenter = WodsPresenter(this, wodsService, realm, prefs, gson)
+        presenter = WodsPresenter(this, wodsService, passwordService, realm, prefs, gson)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -118,6 +126,10 @@ class WodsFragment : Fragment(), WodsContract.View {
             refresh.isRefreshing = false
             rvScrollListener.setLoading(false)
         }
+    }
+
+    override fun setNoMoreItems(noMore: Boolean) {
+        rvScrollListener.setNoMoreItems(noMore)
     }
 
     override fun showError(err: String?, paged: Int) {

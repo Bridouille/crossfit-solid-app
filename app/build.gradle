@@ -4,22 +4,23 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.bridou_n.crossfitsolid"
         minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 14
-        versionName "1.1.4"
+        targetSdkVersion 27
+        versionCode 17
+        versionName "1.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -38,7 +39,8 @@ android {
 }
 
 ext {
-    supportLibraryVersion = '25.3.1'
+    supportLibraryVersion = '27.0.2'
+    playServicesVersion = '11.8.0'
 }
 
 dependencies {
@@ -56,6 +58,8 @@ dependencies {
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    compile 'com.android.support:multidex:1.0.2'
+
     // Support library
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
@@ -69,8 +73,8 @@ dependencies {
 
     // RxJava & RxAndroid & RxBindings
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.7'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.1.0'
 
     // Retrofit + RxJava2CallAdapter + Converters factories
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -97,7 +101,7 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.9'
 
     // Lottie
-    compile 'com.airbnb.android:lottie:2.2.0'
+    compile 'com.airbnb.android:lottie:2.3.1'
 
     // Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -112,8 +116,9 @@ dependencies {
     compile 'com.evernote:android-job:1.1.11'
 
     // Crash reporting
-    compile 'com.google.firebase:firebase-core:11.4.2'
-    compile 'com.google.firebase:firebase-crash:11.4.2'
+    compile "com.google.firebase:firebase-core:${playServicesVersion}"
+    compile "com.google.firebase:firebase-crash:${playServicesVersion}"
+    compile "com.google.firebase:firebase-config:${playServicesVersion}"
 }
 
 apply plugin: 'com.google.gms.google-services'

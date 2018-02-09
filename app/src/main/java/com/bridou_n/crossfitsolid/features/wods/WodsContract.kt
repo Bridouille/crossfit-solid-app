@@ -10,6 +10,8 @@ interface WodsContract {
         fun scrollToTop()
 
         fun showLoading(show: Boolean)
+        fun setNoMoreItems(noMore: Boolean)
+
         fun showEmptyState(show: Boolean)
         fun showError(err: String?, paged: Int)
     }

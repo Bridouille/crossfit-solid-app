@@ -4,8 +4,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.NotificationCompat
 import android.util.Log
 import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.BuildConfig
@@ -18,15 +18,14 @@ import com.bridou_n.crossfitsolid.features.MainActivity
 import com.bridou_n.crossfitsolid.models.wods.Item
 import com.bridou_n.crossfitsolid.utils.PreferencesManager
 import com.bridou_n.crossfitsolid.utils.copyPaste.DailyExecutionWindow
-import com.bridou_n.crossfitsolid.utils.extensionFunctions.getIso8601Format
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
-import com.google.gson.GsonBuilder
 import io.realm.Realm
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 
 /**
@@ -37,16 +36,17 @@ class FetchWodsJob : Job() {
 
     companion object {
         const val TAG = "fetch_wods_job_tag"
+        const val NOTIF_CHANNEL_ID = "1"
 
-        fun scheduleJob(updateCurrent: Boolean = true) : Int {
+        fun scheduleJob(updateCurrent: Boolean = true, isDebug: Boolean = false) : Int {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
 
             // Between 4:15am and 5:15am
-            val TARGET_HOUR = if (BuildConfig.DEBUG) hour.toLong() else 4L
-            val TARGET_MINUTE = if (BuildConfig.DEBUG) minute.toLong() + 1 else 15L
-            val WINDOW_LENGTH = if (BuildConfig.DEBUG) 0 else 60L
+            val TARGET_HOUR = if (isDebug) hour.toLong() else 4L
+            val TARGET_MINUTE = if (isDebug) minute.toLong() + 1 else 15L
+            val WINDOW_LENGTH = if (isDebug) 0 else 60L
 
             val executionWindow = DailyExecutionWindow(hour, minute, TARGET_HOUR, TARGET_MINUTE, WINDOW_LENGTH)
 
@@ -62,7 +62,8 @@ class FetchWodsJob : Job() {
         }
     }
 
-    @Inject lateinit var wodsService: WodsService
+    @field:[Inject Named("xmlFactory")]
+    lateinit var wodsService: WodsService
     @Inject lateinit var prefs: PreferencesManager
 
     override fun onRunJob(params: Params?): Result {
@@ -129,7 +130,7 @@ class FetchWodsJob : Job() {
 
         val contentIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val mBuilder = NotificationCompat.Builder(context)
+        val mBuilder = NotificationCompat.Builder(context, NOTIF_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_notification_logo)
                 .setContentTitle(context.getString(R.string.todays_wod))
                 .setContentText(String.format(context.getString(R.string.checkout_the_wod_for_x), item.title))

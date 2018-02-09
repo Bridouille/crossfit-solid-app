@@ -77,7 +77,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
 
         component().inject(this)
 
-        position = arguments.getInt(POS_KEY)
+        position = arguments?.getInt(POS_KEY)
         currentDate = LocalDate.now().plusDays(position ?: 0)
         presenter = DayViewPresenter(this, bookingService, gson, prefs, currentDate)
     }
@@ -94,7 +94,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate(), {
             bookingId, isBooked, isWaitingList, message ->
 
-            val builder = AlertDialog.Builder(activity, R.style.AppCompatAlertDialogStyle)
+            val builder = AlertDialog.Builder(activity!!, R.style.AppCompatAlertDialogStyle)
                     .setTitle(getString(R.string.confirm))
                     .setMessage(message)
                     .setPositiveButton(getString(android.R.string.ok), DialogInterface.OnClickListener {
@@ -147,7 +147,7 @@ class DayViewFragment : Fragment(), DayViewContract.View {
     override fun showError(err: String?) : Observable<Int> {
         hideAll()
         errorContainer.show()
-        errorText.text = err ?: context.getString(R.string.an_error_occurred)
+        errorText.text = err ?: context!!.getString(R.string.an_error_occurred)
 
         return RxView.clicks(retryBtn).map { _ -> 1 }
     }

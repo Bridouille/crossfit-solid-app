@@ -1,6 +1,7 @@
 package com.bridou_n.crossfitsolid.DI.components
 
 import android.content.Context
+import com.bridou_n.crossfitsolid.API.WodsService
 import com.bridou_n.crossfitsolid.DI.modules.ContextModule
 import com.bridou_n.crossfitsolid.DI.modules.NetworkModule
 import com.bridou_n.crossfitsolid.DI.modules.PreferencesModule
@@ -12,6 +13,8 @@ import com.bridou_n.crossfitsolid.features.wods.WodsFragment
 import com.bridou_n.crossfitsolid.utils.jobs.FetchWodsJob
 import com.google.gson.Gson
 import dagger.Component
+import retrofit2.Retrofit
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -28,6 +31,12 @@ import javax.inject.Singleton
 interface AppComponent {
     fun providesContext() : Context
     fun providesGson() : Gson
+
+    @Named("xmlFactory")
+    fun injectXmlWodsService() : WodsService
+
+    @Named("jsonFactory")
+    fun injectJsonWodsService() : WodsService
 
     fun inject(act: LoginActivity)
     fun inject(act: MainActivity)
