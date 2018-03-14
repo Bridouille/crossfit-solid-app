@@ -84,7 +84,7 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                 instructor.text = "${instructor.text} \uD83D\uDCAA"
             }
 
-            if (activity.cancelled ?: false) { // The class has been canceled
+            if (activity.cancelled == true) { // The class has been canceled
                 updateColors(State.CANCELED)
 
                 actionBtn.hideView()
@@ -145,7 +145,12 @@ class DayClassesRecyclerViewAdapter(val items: ArrayList<GroupActivity>,
                 activity.id ?: -1
             }
 
-            val isWaitingList = activity.slots?.leftToBook ?: -1 == 0 && activity.slots?.hasWaitingList ?: false
+            val isWaitingList = if (isBooked) {
+                activity.booking?.type == "waitingListBooking"
+            } else {
+                activity.slots?.leftToBook ?: -1 == 0 && activity.slots?.hasWaitingList == true
+            }
+
             val message = if (!isBooked) {
                 String.format(view.context.getString(R.string.booking_confirmation_text), title.text, currentDate, startEnd.text, instructor.text)
             } else {

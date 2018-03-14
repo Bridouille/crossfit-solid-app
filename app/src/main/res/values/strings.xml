@@ -42,6 +42,6 @@
     <string name="email_not_valid">The email provided is not valid</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="reset_instructions">Enter the email address you used when you registered. Instructions for resetting your password will be sent to the e-mail address you specify.</string>
-    <string name="daily_wod">Daily wod</string>
-    <string name="channel_description">This channel is used to send the daily wod notification</string>
+    <string name="daily_wod" translatable="false">Daily wod</string>
+    <string name="channel_description" translatable="false">This channel is used to send the daily wod notification</string>
 </resources>

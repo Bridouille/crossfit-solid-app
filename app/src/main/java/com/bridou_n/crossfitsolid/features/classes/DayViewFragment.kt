@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,6 +94,8 @@ class DayViewFragment : Fragment(), DayViewContract.View {
         rv.layoutManager = LinearLayoutManager(context)
         adapter = DayClassesRecyclerViewAdapter(ArrayList(), currentDate.toDate().getFullDate(), {
             bookingId, isBooked, isWaitingList, message ->
+
+            Log.d("DayViewFragment", "bookingId: $bookingId -isBooked: $isBooked - isWaitingList: $isWaitingList")
 
             val builder = AlertDialog.Builder(activity!!, R.style.AppCompatAlertDialogStyle)
                     .setTitle(getString(R.string.confirm))

@@ -29,6 +29,8 @@ class DayViewPresenter(val view: DayViewContract.View,
                        val prefs: PreferencesManager,
                        val currentDate: LocalDate) : DayViewContract.Presenter, BasePresenter() {
 
+    private val TAG = this.javaClass.simpleName
+
     var disposables: CompositeDisposable = CompositeDisposable()
 
     override fun start() {
